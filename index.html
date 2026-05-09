@@ -132,6 +132,7 @@ tr:hover td{background:var(--sf2)}
     <button class="tab" id="btn-meus" onclick="showView('meus')">Meus Gastos</button>
     <button class="tab" id="btn-historico" onclick="showView('historico')">Histórico</button>
     <button class="tab" id="btn-assinaturas" onclick="showView('assinaturas')">Assinaturas</button>
+    <button class="tbtn" id="btn-sync" title="Sincronizar com a nuvem">☁</button>
     <button class="tab" id="btn-config" onclick="showView('config')">Cartões</button>
     <button class="tbtn" id="tbtn">🌙</button>
   </div>
@@ -371,6 +372,13 @@ function mesItems(ym){
 }
 
 // TEMA
+document.getElementById('btn-sync').addEventListener('click',async function(){
+  var btn=this;btn.textContent='⏳';btn.disabled=true;
+  var ok=await cloudLoad();
+  if(ok){localStorage.setItem('fintrack2',JSON.stringify(S));renderDash();toast('☁ Sincronizado!');}
+  else{toast('⚠ Erro ao sincronizar',true);}
+  btn.textContent='☁';btn.disabled=false;
+});
 document.getElementById('tbtn').addEventListener('click',function(){
   var dark=document.documentElement.getAttribute('data-theme')==='dark';
   document.documentElement.setAttribute('data-theme',dark?'light':'dark');

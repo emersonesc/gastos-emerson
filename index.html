@@ -58,7 +58,6 @@ tr:hover td{background:var(--sf2)}
 .filters select,.filters input{background:var(--sf);border:1px solid var(--bd);border-radius:10px;padding:0.52rem 0.85rem;color:var(--tx);font-family:'DM Mono',monospace;font-size:0.84rem;outline:none}
 .filters input{flex:1;min-width:130px}
 .filters select:focus,.filters input:focus{border-color:var(--ac)}
-/* BLOCOS CARTÃO/PESSOA */
 .dgrid{display:grid;grid-template-columns:1fr 1fr;gap:0.85rem;margin-bottom:1.5rem}
 @media(max-width:500px){.dgrid{grid-template-columns:1fr}}
 .dt{background:var(--sf);border:1px solid var(--bd);border-radius:14px;overflow:hidden}
@@ -68,14 +67,12 @@ tr:hover td{background:var(--sf2)}
 .dt-l{display:flex;align-items:center;gap:0.5rem}
 .dt-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
 .dt-vl{font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem}
-/* MESES */
 .months{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:0.65rem;margin-bottom:1.75rem}
 .mchip{background:var(--sf);border:1px solid var(--bd);border-radius:12px;padding:0.9rem 1.1rem;cursor:pointer;transition:all 0.15s}
 .mchip:hover{border-color:var(--ac);background:var(--sf2)}
 .mchip.sel{border-color:var(--ac);background:var(--sf2);box-shadow:0 0 0 2px var(--ac)}
 .mchip .ml{font-size:0.7rem;color:var(--mt);text-transform:uppercase;letter-spacing:0.07em}
 .mchip .mv{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700;margin-top:0.25rem}
-/* LANÇAMENTOS */
 .gl{background:var(--sf);border:1px solid var(--bd);border-radius:14px;overflow:hidden;margin-bottom:1.5rem}
 .gl-hd{font-size:0.7rem;letter-spacing:0.09em;text-transform:uppercase;color:var(--mt);padding:0.8rem 1.1rem;border-bottom:1px solid var(--bd);background:var(--sf2);display:flex;justify-content:space-between;align-items:center}
 .gl-tot{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;color:var(--ac)}
@@ -88,20 +85,17 @@ tr:hover td{background:var(--sf2)}
 .ptag{font-size:0.65rem;padding:0.1rem 0.48rem;border-radius:20px;font-weight:600}
 .pbar{height:3px;background:var(--bd);border-radius:4px;margin-top:0.3rem;overflow:hidden;max-width:160px}
 .pbar-f{height:100%;border-radius:4px}
-/* ASSINATURAS */
 .sig-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:0.85rem;margin-bottom:1.5rem}
 .sig-card{background:var(--sf);border:1px solid var(--bd);border-radius:14px;padding:1.2rem 1.3rem;position:relative;overflow:hidden;transition:border-color 0.15s}
 .sig-card:hover{border-color:var(--ac)}
 .sig-nm{font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;margin:0.25rem 0 0.15rem}
 .sig-vl{font-size:0.92rem;color:var(--ac);font-weight:600}
 .sig-mt{font-size:0.78rem;color:var(--mt);margin-top:0.25rem;line-height:1.5}
-/* TIPO BTN */
 .tipo-row{display:flex;gap:0.5rem;margin-top:0.2rem}
 .tipo-btn{flex:1;padding:0.6rem;border-radius:10px;font-family:'DM Mono',monospace;font-size:0.88rem;cursor:pointer;border:1px solid var(--bd);background:none;color:var(--mt);transition:all 0.15s}
 .tipo-btn.active{border-color:var(--ac);background:var(--ac);color:#052e16;font-weight:600}
 .ibox{background:rgba(74,222,128,0.08);border:1px solid rgba(74,222,128,0.25);border-radius:10px;padding:0.7rem 1rem;font-size:0.83rem;color:var(--mt);margin-bottom:1.25rem}
 .ibox span{color:var(--ac);font-weight:500}
-/* MODAL */
 .ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.65);z-index:500;justify-content:center;align-items:center;padding:1rem}
 .ov.open{display:flex}
 .mb{background:var(--sf);border:1px solid var(--bd);border-radius:18px;padding:1.75rem;width:100%;max-width:480px;max-height:84vh;overflow-y:auto}
@@ -138,7 +132,6 @@ tr:hover td{background:var(--sf2)}
 </header>
 
 <div class="wrap">
-  <!-- DASHBOARD -->
   <div id="view-dashboard" class="view active">
     <div class="cards" id="stat-cards"></div>
     <p class="stl">Por Mês (fatura)</p>
@@ -152,7 +145,6 @@ tr:hover td{background:var(--sf2)}
     <div id="det-content"></div>
   </div>
 
-  <!-- ADICIONAR -->
   <div id="view-adicionar" class="view">
     <p class="stl">Novo Gasto</p>
     <div class="ibox">📅 A fatura cai no <span>mês seguinte</span> à data da compra.</div>
@@ -185,7 +177,6 @@ tr:hover td{background:var(--sf2)}
     </div>
   </div>
 
-  <!-- MEUS GASTOS -->
   <div id="view-meus" class="view">
     <p class="stl">Meus Gastos</p>
     <div class="filters">
@@ -195,7 +186,6 @@ tr:hover td{background:var(--sf2)}
     <div id="meus-wrap"></div>
   </div>
 
-  <!-- HISTÓRICO -->
   <div id="view-historico" class="view">
     <p class="stl">Histórico</p>
     <div class="filters">
@@ -207,7 +197,6 @@ tr:hover td{background:var(--sf2)}
     <div id="hist-wrap"></div>
   </div>
 
-  <!-- ASSINATURAS -->
   <div id="view-assinaturas" class="view">
     <p class="stl">Assinaturas Mensais</p>
     <div class="fc">
@@ -225,7 +214,6 @@ tr:hover td{background:var(--sf2)}
     <div class="sig-grid" id="sig-grid"></div>
   </div>
 
-  <!-- CONFIG -->
   <div id="view-config" class="view">
     <p class="stl">Cartões</p>
     <div class="fc">
@@ -245,14 +233,24 @@ tr:hover td{background:var(--sf2)}
       <button class="btn-p" id="btn-add-p">Adicionar Pessoa</button>
     </div>
     <div id="list-p"></div>
-    <p class="stl" style="margin-top:1.5rem">Google Drive</p>
+    <p class="stl" style="margin-top:1.5rem">Sincronização na Nuvem</p>
     <div class="fc">
-      <p style="font-size:0.82rem;color:var(--mt);margin-bottom:1rem;line-height:1.6">Salve e carregue seus dados direto do Google Drive. O arquivo <span style="color:var(--ac)">gastos-emerson.json</span> será criado na raiz do seu Drive.</p>
-      <div style="display:flex;gap:0.75rem;flex-wrap:wrap">
-        <button class="btn-p" id="btn-drive-save" style="margin-top:0">☁ Salvar no Drive</button>
-        <button class="btn-s" id="btn-drive-load" style="margin-top:0">⬇ Carregar do Drive</button>
+      <p style="font-size:0.82rem;color:var(--mt);margin-bottom:1rem;line-height:1.6">Seus dados são sincronizados automaticamente na nuvem. Use o <span style="color:var(--ac)">ID de Sincronização</span> para acessar seus dados em qualquer navegador.</p>
+      <div class="fgr" style="margin-bottom:1rem">
+        <label>Meu ID de Sincronização</label>
+        <div style="display:flex;gap:0.5rem">
+          <input type="text" id="sync-id-input" placeholder="Carregando..." readonly style="opacity:0.8;cursor:default;flex:1">
+          <button class="btn-s" id="btn-copy-id" style="margin-top:0;white-space:nowrap">📋 Copiar</button>
+        </div>
       </div>
-      <div id="drive-msg" style="margin-top:0.75rem;font-size:0.78rem;color:var(--mt)"></div>
+      <div style="border-top:1px solid var(--bd);padding-top:1rem;margin-top:0.25rem">
+        <p style="font-size:0.78rem;color:var(--mt);margin-bottom:0.75rem">Abrindo em um navegador novo? Cole seu ID aqui:</p>
+        <div style="display:flex;gap:0.5rem">
+          <input type="text" id="sync-id-new" placeholder="Cole seu ID aqui…" style="flex:1;background:var(--bg);border:1px solid var(--bd);border-radius:10px;padding:0.65rem 0.9rem;color:var(--tx);font-family:'DM Mono',monospace;font-size:0.88rem;outline:none">
+          <button class="btn-p" id="btn-sync-load" style="margin-top:0;white-space:nowrap">Conectar</button>
+        </div>
+      </div>
+      <div id="sync-msg" style="margin-top:0.75rem;font-size:0.78rem;color:var(--mt)"></div>
     </div>
     <p class="stl" style="margin-top:1.5rem">Backup Local</p>
     <div class="fc">
@@ -266,7 +264,6 @@ tr:hover td{background:var(--sf2)}
   </div>
 </div>
 
-<!-- MODAL DETALHES -->
 <div class="ov" id="modal-det">
   <div class="mb">
     <h3 id="mdet-title"></h3>
@@ -275,7 +272,6 @@ tr:hover td{background:var(--sf2)}
   </div>
 </div>
 
-<!-- MODAL EDITAR -->
 <div class="ov" id="modal-edit">
   <div class="mb">
     <h3>✏️ Editar Gasto</h3>
@@ -306,7 +302,7 @@ tr:hover td{background:var(--sf2)}
 
 <script>
 var ML=['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
-var SEED_DATA={"cartoes":[{"id":"_x0f5vx00z","nome":"DIGIO","cor":"#69f7c1"},{"id":"_ntashgjv3","nome":"C6","cor":"#f79b69"},{"id":"_lt1au0b3i","nome":"INTER","cor":"#bc5d10"},{"id":"_39h26pbip","nome":"BRADESCO","cor":"#e82517"},{"id":"_v4dyofk84","nome":"MERCADO PAGO","cor":"#b329ae"},{"id":"_dqsryqo87","nome":"AMAZON","cor":"#b0eb0f"}],"pessoas":[{"id":"_lbfte75cx","nome":"VITOR","cor":"#6981f7"},{"id":"_oy295edg9","nome":"ANDRÉ","cor":"#aa2c3f"},{"id":"_awyk8oxrb","nome":"MÃE","cor":"#47aa2c"},{"id":"_xnteenkbb","nome":"EU","cor":"#04072a"},{"id":"_l36dhxxxr","nome":"THAINA","cor":"#8c42ae"},{"id":"_0iatawy1z","nome":"OUTRAS PESSOAS","cor":"#cb2aa0"},{"id":"_opdhe9pbh","nome":"ANA","cor":"#d2df20"}],"gastos":[{"id":"_8ic8lcq14","desc":"VITOR PARCELA","valor":11242.27,"data":"2026-04-18","cartao":"_x0f5vx00z","pessoa":"_lbfte75cx","parcelas":10,"cat":"Outros"},{"id":"_l9eud3sjd","desc":"PASSAGEM THAINA","valor":1024.14,"data":"2026-02-23","cartao":"_x0f5vx00z","pessoa":"_l36dhxxxr","parcelas":4,"cat":"Transporte"},{"id":"_60bbdoymh","desc":"BAW","valor":127.77,"data":"2026-04-20","cartao":"_x0f5vx00z","pessoa":"_xnteenkbb","parcelas":1,"cat":"Compras"},{"id":"_sl6lmp54r","desc":"ALMOÇO PIRAKAIA","valor":200,"data":"2026-04-20","cartao":"_x0f5vx00z","pessoa":"_xnteenkbb","parcelas":1,"cat":"Compras"},{"id":"_nvbjp5s1r","desc":"TAPETE TORRA","valor":134,"data":"2026-04-20","cartao":"_x0f5vx00z","pessoa":"_xnteenkbb","parcelas":1,"cat":"Compras"},{"id":"_pkaundvtc","desc":"DROGARIA FARMACIA","valor":81,"data":"2026-04-20","cartao":"_x0f5vx00z","pessoa":"_xnteenkbb","parcelas":1,"cat":"Compras"},{"id":"_jhl2kvkpn","desc":"GELADEIRA VÓ","valor":3099,"parcval":309.9,"data":"2025-10-20","cartao":"_x0f5vx00z","pessoa":"_0iatawy1z","parcelas":10},{"id":"_toylpwqat","desc":"PASSAGEM IRMÃ SEU REINALDO","valor":2686.85,"parcval":537.37,"data":"2026-03-19","cartao":"_x0f5vx00z","pessoa":"_0iatawy1z","parcelas":5},{"id":"_qytm3sjjb","desc":"COMPRAS EU","valor":601.02,"parcval":300.51,"data":"2026-05-01","cartao":"_dqsryqo87","pessoa":"_xnteenkbb","parcelas":2},{"id":"_49n9xtp2g","desc":"PARCELAMENTO","valor":2850,"parcval":570,"data":"2026-01-20","cartao":"_39h26pbip","pessoa":"_xnteenkbb","parcelas":5},{"id":"_9ixzv5yu6","desc":"HAVAN","valor":509.9,"parcval":50.99,"data":"2025-10-30","cartao":"_39h26pbip","pessoa":"_awyk8oxrb","parcelas":10},{"id":"_o0lrww0nt","desc":"PARCELAMENTO","valor":11403.72,"parcval":950.31,"data":"2025-12-12","cartao":"_39h26pbip","pessoa":"_lbfte75cx","parcelas":12},{"id":"_9pr8fbblb","desc":"APPLE","valor":34.9,"parcval":34.9,"data":"2026-04-30","cartao":"_lt1au0b3i","pessoa":"_oy295edg9","parcelas":1},{"id":"_jr5nnnuww","desc":"UBER","valor":18.01,"parcval":18.01,"data":"2026-04-30","cartao":"_lt1au0b3i","pessoa":"_oy295edg9","parcelas":1},{"id":"_3g9rbgldv","desc":"APPLE","valor":5.9,"parcval":5.9,"data":"2026-04-30","cartao":"_lt1au0b3i","pessoa":"_oy295edg9","parcelas":1},{"id":"_erwax02xp","desc":"UBER","valor":18.95,"parcval":18.95,"data":"2026-04-26","cartao":"_lt1au0b3i","pessoa":"_oy295edg9","parcelas":1},{"id":"_nb5n5rzh7","desc":"CABELO","valor":45,"parcval":45,"data":"2026-04-25","cartao":"_lt1au0b3i","pessoa":"_oy295edg9","parcelas":1},{"id":"_nm4yqztbd","desc":"UBER","valor":18.67,"parcval":18.67,"data":"2026-04-25","cartao":"_lt1au0b3i","pessoa":"_oy295edg9","parcelas":1},{"id":"_8i0l6h0cv","desc":"CELULAR ANA","valor":5650,"parcval":706.25,"data":"2026-04-24","cartao":"_lt1au0b3i","pessoa":"_opdhe9pbh","parcelas":8},{"id":"_6fkft1thu","desc":"UBER","valor":7.95,"parcval":7.95,"data":"2026-04-23","cartao":"_lt1au0b3i","pessoa":"_oy295edg9","parcelas":1},{"id":"_r20343rb5","desc":"UBER","valor":21.95,"parcval":21.95,"data":"2026-04-19","cartao":"_lt1au0b3i","pessoa":"_oy295edg9","parcelas":1},{"id":"_crcv76o8y","desc":"GRAFICA CADU","valor":234,"parcval":117,"data":"2026-04-18","cartao":"_lt1au0b3i","pessoa":"_oy295edg9","parcelas":2},{"id":"_n4karw19t","desc":"ASLAN CADU","valor":979.2,"parcval":244.8,"data":"2026-04-18","cartao":"_lt1au0b3i","pessoa":"_oy295edg9","parcelas":4},{"id":"_4e4p3zdlh","desc":"UBER","valor":16.95,"parcval":16.95,"data":"2026-04-18","cartao":"_lt1au0b3i","pessoa":"_oy295edg9","parcelas":1},{"id":"_h6h5n7phs","desc":"ESFIRRA","valor":11,"parcval":11,"data":"2026-04-17","cartao":"_lt1au0b3i","pessoa":"_oy295edg9","parcelas":1},{"id":"_cz9ajbkgs","desc":"UBER","valor":10.39,"parcval":10.39,"data":"2026-04-13","cartao":"_lt1au0b3i","pessoa":"_oy295edg9","parcelas":1},{"id":"_g4dk9jyby","desc":"PARCELAMENTO","valor":4000,"parcval":800,"data":"2026-04-10","cartao":"_lt1au0b3i","pessoa":"_lbfte75cx","parcelas":5},{"id":"_wpl2z3m61","desc":"UBER","valor":9.88,"parcval":9.88,"data":"2026-04-09","cartao":"_lt1au0b3i","pessoa":"_oy295edg9","parcelas":1},{"id":"_01o5jpqbk","desc":"UBER","valor":26.31,"parcval":26.31,"data":"2026-04-08","cartao":"_lt1au0b3i","pessoa":"_oy295edg9","parcelas":1},{"id":"_xnbencnn6","desc":"JSK","valor":133,"parcval":133,"data":"2026-04-05","cartao":"_lt1au0b3i","pessoa":"_oy295edg9","parcelas":1},{"id":"_3q0wp5ibq","desc":"PARCELAMENTO SEU REINALDO","valor":5815,"parcval":1163,"data":"2026-03-08","cartao":"_lt1au0b3i","pessoa":"_0iatawy1z","parcelas":5},{"id":"_k5hxyjpbe","desc":"PARCELAMENTO","valor":4000,"parcval":800,"data":"2026-02-13","cartao":"_lt1au0b3i","pessoa":"_lbfte75cx","parcelas":5},{"id":"_n659fkj9y","desc":"ESCOLA MIGUEL","valor":1643.96,"parcval":410.99,"data":"2026-01-27","cartao":"_lt1au0b3i","pessoa":"_l36dhxxxr","parcelas":4},{"id":"_nn3qk52bn","desc":"SALMO","valor":408.24,"parcval":68.04,"data":"2026-01-27","cartao":"_lt1au0b3i","pessoa":"_l36dhxxxr","parcelas":6},{"id":"_ht23y06xc","desc":"PARCELAMENTO","valor":4000,"parcval":500,"data":"2025-10-12","cartao":"_lt1au0b3i","pessoa":"_lbfte75cx","parcelas":8},{"id":"_d3fclafsn","desc":"JUROS","valor":10000,"parcval":1000,"data":"2025-08-11","cartao":"_lt1au0b3i","pessoa":"_lbfte75cx","parcelas":10},{"id":"_3pkpsyky0","desc":"PARCELAMENTO","valor":6999.96,"parcval":583.33,"data":"2025-07-08","cartao":"_lt1au0b3i","pessoa":"_lbfte75cx","parcelas":12},{"id":"_lk8yzgt6l","desc":"INGRESSO","parcval":78.77,"valor":393.85,"parcelas":5,"data":"2026-01-21","cartao":"_v4dyofk84","pessoa":"_xnteenkbb"},{"id":"_o43rf6i4v","desc":"INGRESSO","valor":393.85,"parcval":78.77,"data":"2026-01-21","cartao":"_v4dyofk84","pessoa":"_opdhe9pbh","parcelas":5},{"id":"_hd1wxqu5d","desc":"CELULAR","valor":5421.12,"parcval":225.88,"data":"2025-11-30","cartao":"_v4dyofk84","pessoa":"_xnteenkbb","parcelas":24},{"id":"_l3oa37i66","desc":"PASSAGEM TIA TATA","valor":1995.05,"parcval":399.01,"data":"2026-04-18","cartao":"_ntashgjv3","pessoa":"_0iatawy1z","parcelas":5},{"id":"_m9euclkyx","desc":"BIOIMPEDANCIA","valor":203.64,"parcval":16.97,"data":"2026-04-16","cartao":"_ntashgjv3","pessoa":"_xnteenkbb","parcelas":12},{"id":"_j9gkcod92","desc":"AIRBNB","valor":787.74,"parcval":131.29,"data":"2026-04-16","cartao":"_ntashgjv3","pessoa":"_l36dhxxxr","parcelas":6},{"id":"_rvlb0vk0d","desc":"PASSAGEM","valor":1050.6,"parcval":210.12,"data":"2026-02-22","cartao":"_ntashgjv3","pessoa":"_opdhe9pbh","parcelas":5},{"id":"_r71i71uij","desc":"UBER OAB","valor":29.99,"parcval":29.99,"data":"2026-04-30","cartao":"_ntashgjv3","pessoa":"_xnteenkbb","parcelas":1},{"id":"_w0tc7v014","desc":"UBER OAB VOLTA","valor":29.98,"parcval":29.98,"data":"2026-04-30","cartao":"_ntashgjv3","pessoa":"_xnteenkbb","parcelas":1},{"id":"_g31namjl0","desc":"NOVA ERA","valor":124.32,"parcval":124.32,"data":"2026-04-26","cartao":"_ntashgjv3","pessoa":"_xnteenkbb","parcelas":1},{"id":"_70orn4di1","desc":"GASOLINA","valor":68.58,"parcval":68.58,"data":"2026-04-24","cartao":"_ntashgjv3","pessoa":"_xnteenkbb","parcelas":1},{"id":"_uir65tq1t","desc":"UBER","valor":40.98,"parcval":40.98,"data":"2026-04-18","cartao":"_ntashgjv3","pessoa":"_xnteenkbb","parcelas":1},{"id":"_x4dqpy31b","desc":"BAR DO CANTO","valor":159.76,"parcval":159.76,"data":"2026-04-18","cartao":"_ntashgjv3","pessoa":"_xnteenkbb","parcelas":1},{"id":"_rclwo1exe","desc":"PARCELAMENTO 2.5K","valor":2718.04,"parcval":679.51,"data":"2026-04-18","cartao":"_ntashgjv3","pessoa":"_awyk8oxrb","parcelas":4},{"id":"_9z3teia8a","desc":"UBER","valor":36.98,"parcval":36.98,"data":"2026-04-18","cartao":"_ntashgjv3","pessoa":"_xnteenkbb","parcelas":1},{"id":"_a8nomv9qz","desc":"CADARÇO","valor":24.5,"parcval":24.5,"data":"2026-04-18","cartao":"_ntashgjv3","pessoa":"_xnteenkbb","parcelas":1},{"id":"_rg3iokt7m","desc":"REVISÃO MOTO","valor":170,"parcval":170,"data":"2026-04-18","cartao":"_ntashgjv3","pessoa":"_xnteenkbb","parcelas":1},{"id":"_l6bmoz3s0","desc":"PARCELAMENTO","valor":1300,"parcval":650,"data":"2026-04-17","cartao":"_ntashgjv3","pessoa":"_xnteenkbb","parcelas":2},{"id":"_humpljv7i","desc":"PARCELAMENTO","valor":400,"parcval":400,"data":"2026-04-17","cartao":"_ntashgjv3","pessoa":"_xnteenkbb","parcelas":1},{"id":"_213gtr3q5","desc":"MOTO","valor":185,"parcval":185,"data":"2026-04-17","cartao":"_ntashgjv3","pessoa":"_xnteenkbb","parcelas":1},{"id":"_aw0ak2xta","desc":"MOTO","valor":200.5,"parcval":200.5,"data":"2026-04-17","cartao":"_ntashgjv3","pessoa":"_xnteenkbb","parcelas":1},{"id":"_jdhn76x6e","desc":"PERFUME","valor":103.35,"parcval":103.35,"data":"2026-04-17","cartao":"_ntashgjv3","pessoa":"_xnteenkbb","parcelas":1},{"id":"_5ut8bvwvd","desc":"HAVAN","valor":1660,"parcval":166,"data":"2025-10-30","cartao":"_ntashgjv3","pessoa":"_awyk8oxrb","parcelas":10},{"id":"_0frj2q4ff","desc":"CARTÕ DIGIO","parcval":4150,"valor":4150,"parcelas":1,"data":"2026-04-28","cartao":"_x0f5vx00z","pessoa":"_awyk8oxrb"},{"id":"_q2a7vh0j8","desc":"NETFLIX","valor":75,"parcval":75,"data":"2026-04-28","cartao":"_x0f5vx00z","pessoa":"_oy295edg9","parcelas":1},{"id":"_wwmhcqfq0","desc":"CINEMA","valor":30,"parcval":30,"data":"2026-05-06","cartao":"_lt1au0b3i","pessoa":"_oy295edg9","parcelas":1},{"id":"_ag67vsc7u","desc":"ESTACIONAMENTO","valor":14,"parcval":14,"data":"2026-05-06","cartao":"_lt1au0b3i","pessoa":"_oy295edg9","parcelas":1},{"id":"_7cnlkz59m","desc":"JSK","valor":92.9,"parcval":92.9,"data":"2026-05-06","cartao":"_lt1au0b3i","pessoa":"_oy295edg9","parcelas":1},{"id":"_ffho2w8nv","desc":"GASOLINA","valor":50,"parcval":50,"data":"2026-05-06","cartao":"_lt1au0b3i","pessoa":"_oy295edg9","parcelas":1},{"id":"_r7rc26oso","desc":"AMERICANAS","valor":30.98,"parcval":30.98,"data":"2026-05-06","cartao":"_lt1au0b3i","pessoa":"_oy295edg9","parcelas":1}],"assinaturas":[{"id":"_h4qvhp1oy","nome":"CONTA VIVO","valor":41,"cartao":"_lt1au0b3i","pessoa":"_oy295edg9","dia":13,"cor":"#6effa8"},{"id":"_ta7j05o7y","nome":"CONTA VIVO","valor":46,"cartao":"_lt1au0b3i","pessoa":"_xnteenkbb","dia":13,"cor":"#6effa8"},{"id":"_hc4yagdde","nome":"CONTA VIVO","valor":41,"cartao":"_lt1au0b3i","pessoa":"_awyk8oxrb","dia":13,"cor":"#6effa8"},{"id":"_fzesfpmex","nome":"YOUTUBE","valor":16.9,"cartao":"_ntashgjv3","pessoa":"_xnteenkbb","dia":21,"cor":"#4ade80"},{"id":"_tihlxnn9g","nome":"ACADEMIA","valor":104.9,"cartao":"_ntashgjv3","pessoa":"_xnteenkbb","dia":19,"cor":"#af1242"}]};
+var SEED_DATA={"cartoes":[{"id":"_x0f5vx00z","nome":"DIGIO","cor":"#69f7c1"},{"id":"_ntashgjv3","nome":"C6","cor":"#f79b69"},{"id":"_lt1au0b3i","nome":"INTER","cor":"#bc5d10"},{"id":"_39h26pbip","nome":"BRADESCO","cor":"#e82517"},{"id":"_v4dyofk84","nome":"MERCADO PAGO","cor":"#b329ae"},{"id":"_dqsryqo87","nome":"AMAZON","cor":"#b0eb0f"}],"pessoas":[{"id":"_lbfte75cx","nome":"VITOR","cor":"#6981f7"},{"id":"_oy295edg9","nome":"ANDRÉ","cor":"#aa2c3f"},{"id":"_awyk8oxrb","nome":"MÃE","cor":"#47aa2c"},{"id":"_xnteenkbb","nome":"EU","cor":"#04072a"},{"id":"_l36dhxxxr","nome":"THAINA","cor":"#8c42ae"},{"id":"_0iatawy1z","nome":"OUTRAS PESSOAS","cor":"#cb2aa0"},{"id":"_opdhe9pbh","nome":"ANA","cor":"#d2df20"}],"gastos":[{"id":"_8ic8lcq14","desc":"VITOR PARCELA","valor":11242.27,"data":"2026-04-18","cartao":"_x0f5vx00z","pessoa":"_lbfte75cx","parcelas":10},{"id":"_l9eud3sjd","desc":"PASSAGEM THAINA","valor":1024.14,"data":"2026-02-23","cartao":"_x0f5vx00z","pessoa":"_l36dhxxxr","parcelas":4},{"id":"_60bbdoymh","desc":"BAW","valor":127.77,"data":"2026-04-20","cartao":"_x0f5vx00z","pessoa":"_xnteenkbb","parcelas":1},{"id":"_sl6lmp54r","desc":"ALMOÇO PIRAKAIA","valor":200,"data":"2026-04-20","cartao":"_x0f5vx00z","pessoa":"_xnteenkbb","parcelas":1},{"id":"_nvbjp5s1r","desc":"TAPETE TORRA","valor":134,"data":"2026-04-20","cartao":"_x0f5vx00z","pessoa":"_xnteenkbb","parcelas":1},{"id":"_pkaundvtc","desc":"DROGARIA FARMACIA","valor":81,"data":"2026-04-20","cartao":"_x0f5vx00z","pessoa":"_xnteenkbb","parcelas":1},{"id":"_jhl2kvkpn","desc":"GELADEIRA VÓ","valor":3099,"parcval":309.9,"data":"2025-10-20","cartao":"_x0f5vx00z","pessoa":"_0iatawy1z","parcelas":10},{"id":"_toylpwqat","desc":"PASSAGEM IRMÃ SEU REINALDO","valor":2686.85,"parcval":537.37,"data":"2026-03-19","cartao":"_x0f5vx00z","pessoa":"_0iatawy1z","parcelas":5},{"id":"_qytm3sjjb","desc":"COMPRAS EU","valor":601.02,"parcval":300.51,"data":"2026-05-01","cartao":"_dqsryqo87","pessoa":"_xnteenkbb","parcelas":2},{"id":"_49n9xtp2g","desc":"PARCELAMENTO","valor":2850,"parcval":570,"data":"2026-01-20","cartao":"_39h26pbip","pessoa":"_xnteenkbb","parcelas":5},{"id":"_9ixzv5yu6","desc":"HAVAN","valor":509.9,"parcval":50.99,"data":"2025-10-30","cartao":"_39h26pbip","pessoa":"_awyk8oxrb","parcelas":10},{"id":"_o0lrww0nt","desc":"PARCELAMENTO","valor":11403.72,"parcval":950.31,"data":"2025-12-12","cartao":"_39h26pbip","pessoa":"_lbfte75cx","parcelas":12},{"id":"_9pr8fbblb","desc":"APPLE","valor":34.9,"parcval":34.9,"data":"2026-04-30","cartao":"_lt1au0b3i","pessoa":"_oy295edg9","parcelas":1},{"id":"_jr5nnnuww","desc":"UBER","valor":18.01,"parcval":18.01,"data":"2026-04-30","cartao":"_lt1au0b3i","pessoa":"_oy295edg9","parcelas":1},{"id":"_3g9rbgldv","desc":"APPLE","valor":5.9,"parcval":5.9,"data":"2026-04-30","cartao":"_lt1au0b3i","pessoa":"_oy295edg9","parcelas":1},{"id":"_erwax02xp","desc":"UBER","valor":18.95,"parcval":18.95,"data":"2026-04-26","cartao":"_lt1au0b3i","pessoa":"_oy295edg9","parcelas":1},{"id":"_nb5n5rzh7","desc":"CABELO","valor":45,"parcval":45,"data":"2026-04-25","cartao":"_lt1au0b3i","pessoa":"_oy295edg9","parcelas":1},{"id":"_nm4yqztbd","desc":"UBER","valor":18.67,"parcval":18.67,"data":"2026-04-25","cartao":"_lt1au0b3i","pessoa":"_oy295edg9","parcelas":1},{"id":"_8i0l6h0cv","desc":"CELULAR ANA","valor":5650,"parcval":706.25,"data":"2026-04-24","cartao":"_lt1au0b3i","pessoa":"_opdhe9pbh","parcelas":8},{"id":"_6fkft1thu","desc":"UBER","valor":7.95,"parcval":7.95,"data":"2026-04-23","cartao":"_lt1au0b3i","pessoa":"_oy295edg9","parcelas":1},{"id":"_r20343rb5","desc":"UBER","valor":21.95,"parcval":21.95,"data":"2026-04-19","cartao":"_lt1au0b3i","pessoa":"_oy295edg9","parcelas":1},{"id":"_crcv76o8y","desc":"GRAFICA CADU","valor":234,"parcval":117,"data":"2026-04-18","cartao":"_lt1au0b3i","pessoa":"_oy295edg9","parcelas":2},{"id":"_n4karw19t","desc":"ASLAN CADU","valor":979.2,"parcval":244.8,"data":"2026-04-18","cartao":"_lt1au0b3i","pessoa":"_oy295edg9","parcelas":4},{"id":"_4e4p3zdlh","desc":"UBER","valor":16.95,"parcval":16.95,"data":"2026-04-18","cartao":"_lt1au0b3i","pessoa":"_oy295edg9","parcelas":1},{"id":"_h6h5n7phs","desc":"ESFIRRA","valor":11,"parcval":11,"data":"2026-04-17","cartao":"_lt1au0b3i","pessoa":"_oy295edg9","parcelas":1},{"id":"_cz9ajbkgs","desc":"UBER","valor":10.39,"parcval":10.39,"data":"2026-04-13","cartao":"_lt1au0b3i","pessoa":"_oy295edg9","parcelas":1},{"id":"_g4dk9jyby","desc":"PARCELAMENTO","valor":4000,"parcval":800,"data":"2026-04-10","cartao":"_lt1au0b3i","pessoa":"_lbfte75cx","parcelas":5},{"id":"_wpl2z3m61","desc":"UBER","valor":9.88,"parcval":9.88,"data":"2026-04-09","cartao":"_lt1au0b3i","pessoa":"_oy295edg9","parcelas":1},{"id":"_01o5jpqbk","desc":"UBER","valor":26.31,"parcval":26.31,"data":"2026-04-08","cartao":"_lt1au0b3i","pessoa":"_oy295edg9","parcelas":1},{"id":"_xnbencnn6","desc":"JSK","valor":133,"parcval":133,"data":"2026-04-05","cartao":"_lt1au0b3i","pessoa":"_oy295edg9","parcelas":1},{"id":"_3q0wp5ibq","desc":"PARCELAMENTO SEU REINALDO","valor":5815,"parcval":1163,"data":"2026-03-08","cartao":"_lt1au0b3i","pessoa":"_0iatawy1z","parcelas":5},{"id":"_k5hxyjpbe","desc":"PARCELAMENTO","valor":4000,"parcval":800,"data":"2026-02-13","cartao":"_lt1au0b3i","pessoa":"_lbfte75cx","parcelas":5},{"id":"_n659fkj9y","desc":"ESCOLA MIGUEL","valor":1643.96,"parcval":410.99,"data":"2026-01-27","cartao":"_lt1au0b3i","pessoa":"_l36dhxxxr","parcelas":4},{"id":"_nn3qk52bn","desc":"SALMO","valor":408.24,"parcval":68.04,"data":"2026-01-27","cartao":"_lt1au0b3i","pessoa":"_l36dhxxxr","parcelas":6},{"id":"_ht23y06xc","desc":"PARCELAMENTO","valor":4000,"parcval":500,"data":"2025-10-12","cartao":"_lt1au0b3i","pessoa":"_lbfte75cx","parcelas":8},{"id":"_d3fclafsn","desc":"JUROS","valor":10000,"parcval":1000,"data":"2025-08-11","cartao":"_lt1au0b3i","pessoa":"_lbfte75cx","parcelas":10},{"id":"_3pkpsyky0","desc":"PARCELAMENTO","valor":6999.96,"parcval":583.33,"data":"2025-07-08","cartao":"_lt1au0b3i","pessoa":"_lbfte75cx","parcelas":12},{"id":"_lk8yzgt6l","desc":"INGRESSO","parcval":78.77,"valor":393.85,"parcelas":5,"data":"2026-01-21","cartao":"_v4dyofk84","pessoa":"_xnteenkbb"},{"id":"_o43rf6i4v","desc":"INGRESSO","valor":393.85,"parcval":78.77,"data":"2026-01-21","cartao":"_v4dyofk84","pessoa":"_opdhe9pbh","parcelas":5},{"id":"_hd1wxqu5d","desc":"CELULAR","valor":5421.12,"parcval":225.88,"data":"2025-11-30","cartao":"_v4dyofk84","pessoa":"_xnteenkbb","parcelas":24},{"id":"_l3oa37i66","desc":"PASSAGEM TIA TATA","valor":1995.05,"parcval":399.01,"data":"2026-04-18","cartao":"_ntashgjv3","pessoa":"_0iatawy1z","parcelas":5},{"id":"_m9euclkyx","desc":"BIOIMPEDANCIA","valor":203.64,"parcval":16.97,"data":"2026-04-16","cartao":"_ntashgjv3","pessoa":"_xnteenkbb","parcelas":12},{"id":"_j9gkcod92","desc":"AIRBNB","valor":787.74,"parcval":131.29,"data":"2026-04-16","cartao":"_ntashgjv3","pessoa":"_l36dhxxxr","parcelas":6},{"id":"_rvlb0vk0d","desc":"PASSAGEM","valor":1050.6,"parcval":210.12,"data":"2026-02-22","cartao":"_ntashgjv3","pessoa":"_opdhe9pbh","parcelas":5},{"id":"_r71i71uij","desc":"UBER OAB","valor":29.99,"parcval":29.99,"data":"2026-04-30","cartao":"_ntashgjv3","pessoa":"_xnteenkbb","parcelas":1},{"id":"_w0tc7v014","desc":"UBER OAB VOLTA","valor":29.98,"parcval":29.98,"data":"2026-04-30","cartao":"_ntashgjv3","pessoa":"_xnteenkbb","parcelas":1},{"id":"_g31namjl0","desc":"NOVA ERA","valor":124.32,"parcval":124.32,"data":"2026-04-26","cartao":"_ntashgjv3","pessoa":"_xnteenkbb","parcelas":1},{"id":"_70orn4di1","desc":"GASOLINA","valor":68.58,"parcval":68.58,"data":"2026-04-24","cartao":"_ntashgjv3","pessoa":"_xnteenkbb","parcelas":1},{"id":"_uir65tq1t","desc":"UBER","valor":40.98,"parcval":40.98,"data":"2026-04-18","cartao":"_ntashgjv3","pessoa":"_xnteenkbb","parcelas":1},{"id":"_x4dqpy31b","desc":"BAR DO CANTO","valor":159.76,"parcval":159.76,"data":"2026-04-18","cartao":"_ntashgjv3","pessoa":"_xnteenkbb","parcelas":1},{"id":"_rclwo1exe","desc":"PARCELAMENTO 2.5K","valor":2718.04,"parcval":679.51,"data":"2026-04-18","cartao":"_ntashgjv3","pessoa":"_awyk8oxrb","parcelas":4},{"id":"_9z3teia8a","desc":"UBER","valor":36.98,"parcval":36.98,"data":"2026-04-18","cartao":"_ntashgjv3","pessoa":"_xnteenkbb","parcelas":1},{"id":"_a8nomv9qz","desc":"CADARÇO","valor":24.5,"parcval":24.5,"data":"2026-04-18","cartao":"_ntashgjv3","pessoa":"_xnteenkbb","parcelas":1},{"id":"_rg3iokt7m","desc":"REVISÃO MOTO","valor":170,"parcval":170,"data":"2026-04-18","cartao":"_ntashgjv3","pessoa":"_xnteenkbb","parcelas":1},{"id":"_l6bmoz3s0","desc":"PARCELAMENTO","valor":1300,"parcval":650,"data":"2026-04-17","cartao":"_ntashgjv3","pessoa":"_xnteenkbb","parcelas":2},{"id":"_humpljv7i","desc":"PARCELAMENTO","valor":400,"parcval":400,"data":"2026-04-17","cartao":"_ntashgjv3","pessoa":"_xnteenkbb","parcelas":1},{"id":"_213gtr3q5","desc":"MOTO","valor":185,"parcval":185,"data":"2026-04-17","cartao":"_ntashgjv3","pessoa":"_xnteenkbb","parcelas":1},{"id":"_aw0ak2xta","desc":"MOTO","valor":200.5,"parcval":200.5,"data":"2026-04-17","cartao":"_ntashgjv3","pessoa":"_xnteenkbb","parcelas":1},{"id":"_jdhn76x6e","desc":"PERFUME","valor":103.35,"parcval":103.35,"data":"2026-04-17","cartao":"_ntashgjv3","pessoa":"_xnteenkbb","parcelas":1},{"id":"_5ut8bvwvd","desc":"HAVAN","valor":1660,"parcval":166,"data":"2025-10-30","cartao":"_ntashgjv3","pessoa":"_awyk8oxrb","parcelas":10},{"id":"_0frj2q4ff","desc":"CARTÕ DIGIO","parcval":4150,"valor":4150,"parcelas":1,"data":"2026-04-28","cartao":"_x0f5vx00z","pessoa":"_awyk8oxrb"},{"id":"_q2a7vh0j8","desc":"NETFLIX","valor":75,"parcval":75,"data":"2026-04-28","cartao":"_x0f5vx00z","pessoa":"_oy295edg9","parcelas":1},{"id":"_wwmhcqfq0","desc":"CINEMA","valor":30,"parcval":30,"data":"2026-05-06","cartao":"_lt1au0b3i","pessoa":"_oy295edg9","parcelas":1},{"id":"_ag67vsc7u","desc":"ESTACIONAMENTO","valor":14,"parcval":14,"data":"2026-05-06","cartao":"_lt1au0b3i","pessoa":"_oy295edg9","parcelas":1},{"id":"_7cnlkz59m","desc":"JSK","valor":92.9,"parcval":92.9,"data":"2026-05-06","cartao":"_lt1au0b3i","pessoa":"_oy295edg9","parcelas":1},{"id":"_ffho2w8nv","desc":"GASOLINA","valor":50,"parcval":50,"data":"2026-05-06","cartao":"_lt1au0b3i","pessoa":"_oy295edg9","parcelas":1},{"id":"_r7rc26oso","desc":"AMERICANAS","valor":30.98,"parcval":30.98,"data":"2026-05-06","cartao":"_lt1au0b3i","pessoa":"_oy295edg9","parcelas":1}],"assinaturas":[{"id":"_h4qvhp1oy","nome":"CONTA VIVO","valor":41,"cartao":"_lt1au0b3i","pessoa":"_oy295edg9","dia":13,"cor":"#6effa8"},{"id":"_ta7j05o7y","nome":"CONTA VIVO","valor":46,"cartao":"_lt1au0b3i","pessoa":"_xnteenkbb","dia":13,"cor":"#6effa8"},{"id":"_hc4yagdde","nome":"CONTA VIVO","valor":41,"cartao":"_lt1au0b3i","pessoa":"_awyk8oxrb","dia":13,"cor":"#6effa8"},{"id":"_fzesfpmex","nome":"YOUTUBE","valor":16.9,"cartao":"_ntashgjv3","pessoa":"_xnteenkbb","dia":21,"cor":"#4ade80"},{"id":"_tihlxnn9g","nome":"ACADEMIA","valor":104.9,"cartao":"_ntashgjv3","pessoa":"_xnteenkbb","dia":19,"cor":"#af1242"}]};
 var S=(function(){
   try{return JSON.parse(localStorage.getItem('fintrack2'))||JSON.parse(localStorage.getItem('fintrack'))||null;}
   catch(e){return null;}
@@ -340,7 +336,6 @@ function toast(msg,err){
   t.classList.add('show');setTimeout(function(){t.classList.remove('show');},2600);
 }
 
-// normaliza gasto para o modal
 function gastoToItem(g,parcAtual){
   return {_isSig:false,_nome:g.desc||'?',_val:pval(g),_data:g.data||'',_pessoaId:g.pessoa,_cartaoId:g.cartao,_parcelas:g.parcelas,_parcAtual:parcAtual||1,_rest:parcRest(g)};
 }
@@ -360,14 +355,12 @@ function mesItems(ym){
   return items;
 }
 
-// TEMA
 document.getElementById('tbtn').addEventListener('click',function(){
   var dark=document.documentElement.getAttribute('data-theme')==='dark';
   document.documentElement.setAttribute('data-theme',dark?'light':'dark');
   this.textContent=dark?'☀️':'🌙';
 });
 
-// MODAL
 function openModal(title,color,items){
   document.getElementById('mdet-title').innerHTML='<span style="color:'+color+'">'+title+'</span>';
   var body=document.getElementById('mdet-body');
@@ -408,7 +401,6 @@ function openModal(title,color,items){
 document.getElementById('mdet-close').addEventListener('click',function(){document.getElementById('modal-det').classList.remove('open');});
 document.getElementById('modal-det').addEventListener('click',function(e){if(e.target===this)this.classList.remove('open');});
 
-// VIEWS
 function showView(v){
   document.querySelectorAll('.view').forEach(function(e){e.classList.remove('active');});
   document.querySelectorAll('.tab').forEach(function(e){e.classList.remove('active');});
@@ -422,7 +414,6 @@ function showView(v){
   if(v==='assinaturas')renderSig();
 }
 
-// ADD
 function setTipo(t){
   tipoAtual=t;
   document.getElementById('tipo-av').classList.toggle('active',t==='av');
@@ -468,7 +459,6 @@ document.getElementById('btn-add').addEventListener('click',function(){
   document.getElementById('f-pv').value='';document.getElementById('f-calc').value='';document.getElementById('f-np').value='2';
 });
 
-// EDIT
 function openEdit(id){
   var g=S.gastos.find(function(x){return x.id===id;});if(!g)return;editId=id;
   document.getElementById('e-desc').value=g.desc;
@@ -494,7 +484,6 @@ document.getElementById('btn-salvar').addEventListener('click',function(){
   if(document.getElementById('view-meus').classList.contains('active'))renderMeus();
 });
 
-// DASHBOARD
 function renderDash(){
   var ym=nowYM(),pf={};
   S.gastos.forEach(function(g){
@@ -514,46 +503,23 @@ function renderDash(){
     '<div class="sc c2"><div class="sc-lb">Fatura Mês Atual</div><div class="sc-vl">'+fmt(fatAtual)+'</div></div>'+
     '<div class="sc c3"><div class="sc-lb">Assinaturas/Mês</div><div class="sc-vl">'+fmt(sigTot)+'</div></div>'+
     '<div class="sc c4"><div class="sc-lb">Lançamentos Mês</div><div class="sc-vl">'+lancMes+'</div></div>';
-
-  // meses
   var meses=Object.keys(pf).sort().filter(function(m){return m>=ym;});
   var mEl=document.getElementById('months');mEl.innerHTML='';
   if(!meses.length){mEl.innerHTML='<div class="empty"><span class="e">📅</span>Sem gastos</div>';}
-  else{
-    meses.forEach(function(m){
-      var ch=document.createElement('div');ch.className='mchip';ch.dataset.ym=m;
-      ch.innerHTML='<div class="ml">'+mlab(m)+'</div><div class="mv">'+fmt(pf[m])+'</div>';
-      ch.addEventListener('click',function(){selectMes(m);});mEl.appendChild(ch);
-    });
-  }
-
-  // Por Cartão
+  else{meses.forEach(function(m){var ch=document.createElement('div');ch.className='mchip';ch.dataset.ym=m;ch.innerHTML='<div class="ml">'+mlab(m)+'</div><div class="mv">'+fmt(pf[m])+'</div>';ch.addEventListener('click',function(){selectMes(m);});mEl.appendChild(ch);});}
   var bcEl=document.getElementById('body-c');bcEl.innerHTML='';
   var cTots={},cItems={};
   S.cartoes.forEach(function(c){cTots[c.id]=0;cItems[c.id]=[];});
   S.gastos.forEach(function(g){if(cTots[g.cartao]!==undefined){cTots[g.cartao]+=g.valor;cItems[g.cartao].push(gastoToItem(g,1));}});
   S.assinaturas.forEach(function(a){if(cTots[a.cartao]!==undefined){cTots[a.cartao]+=a.valor;cItems[a.cartao].push(sigToItem(a));}});
   if(!S.cartoes.length){bcEl.innerHTML='<div style="padding:1rem;font-size:0.82rem;color:var(--mt)">Nenhum cartão</div>';}
-  else{S.cartoes.forEach(function(c){
-    var row=document.createElement('div');row.className='dt-row';
-    var sigs=S.assinaturas.filter(function(a){return a.cartao===c.id;}).length;
-    row.innerHTML='<div class="dt-l"><span class="dt-dot" style="background:'+c.cor+'"></span>'+c.nome+(sigs?' <span style="font-size:0.68rem;color:var(--mt)">(+'+sigs+')</span>':'')+'</div><div class="dt-vl" style="color:'+c.cor+'">'+fmt(cTots[c.id])+'</div>';
-    var mi=cItems[c.id];row.addEventListener('click',function(){openModal(c.nome,c.cor,mi);});bcEl.appendChild(row);
-  });}
-
-  // Por Pessoa
+  else{S.cartoes.forEach(function(c){var row=document.createElement('div');row.className='dt-row';var sigs=S.assinaturas.filter(function(a){return a.cartao===c.id;}).length;row.innerHTML='<div class="dt-l"><span class="dt-dot" style="background:'+c.cor+'"></span>'+c.nome+(sigs?' <span style="font-size:0.68rem;color:var(--mt)">(+'+sigs+')</span>':'')+'</div><div class="dt-vl" style="color:'+c.cor+'">'+fmt(cTots[c.id])+'</div>';var mi=cItems[c.id];row.addEventListener('click',function(){openModal(c.nome,c.cor,mi);});bcEl.appendChild(row);});}
   var bpEl=document.getElementById('body-p');bpEl.innerHTML='';
   var pTots={},pItems={};
   S.pessoas.forEach(function(p){pTots[p.id]=0;pItems[p.id]=[];});
   S.gastos.forEach(function(g){if(pTots[g.pessoa]!==undefined){pTots[g.pessoa]+=g.valor;pItems[g.pessoa].push(gastoToItem(g,1));}});
   if(!S.pessoas.length){bpEl.innerHTML='<div style="padding:1rem;font-size:0.82rem;color:var(--mt)">Nenhuma pessoa</div>';}
-  else{S.pessoas.forEach(function(p){
-    var row=document.createElement('div');row.className='dt-row';
-    row.innerHTML='<div class="dt-l"><span class="dt-dot" style="background:'+p.cor+'"></span>'+p.nome+'</div><div class="dt-vl" style="color:'+p.cor+'">'+fmt(pTots[p.id])+'</div>';
-    var mi=pItems[p.id];row.addEventListener('click',function(){openModal(p.nome,p.cor,mi);});bpEl.appendChild(row);
-  });}
-
-  // seleciona mês automaticamente
+  else{S.pessoas.forEach(function(p){var row=document.createElement('div');row.className='dt-row';row.innerHTML='<div class="dt-l"><span class="dt-dot" style="background:'+p.cor+'"></span>'+p.nome+'</div><div class="dt-vl" style="color:'+p.cor+'">'+fmt(pTots[p.id])+'</div>';var mi=pItems[p.id];row.addEventListener('click',function(){openModal(p.nome,p.cor,mi);});bpEl.appendChild(row);});}
   if(meses.length)selectMes(meses[0]);
 }
 
@@ -567,7 +533,6 @@ function selectMes(ym){
   items.forEach(function(it){if(pc[it._cartaoId]!==undefined)pc[it._cartaoId]+=it._val;if(pp[it._pessoaId]!==undefined)pp[it._pessoaId]+=it._val;});
   var det=document.getElementById('det-content');det.innerHTML='';
   var grid=document.createElement('div');grid.className='dgrid';
-
   function makeDetBlock(title,arr,keyFn,corFn,nameFn,porObj,filtFn){
     var dt=document.createElement('div');dt.className='dt';
     dt.innerHTML='<div class="dt-hd">'+title+'</div>';
@@ -585,7 +550,6 @@ function selectMes(ym){
   grid.appendChild(makeDetBlock('Por Cartão',S.cartoes,function(c){return c.id;},function(c){return c.cor;},function(c){return c.nome;},pc,function(c){return function(it){return it._cartaoId===c.id;};}));
   grid.appendChild(makeDetBlock('Por Pessoa',S.pessoas,function(p){return p.id;},function(p){return p.cor;},function(p){return p.nome;},pp,function(p){return function(it){return it._pessoaId===p.id;};}));
   det.appendChild(grid);
-
   var gl=document.createElement('div');gl.className='gl';
   gl.innerHTML='<div class="gl-hd"><span>Lançamentos ('+items.length+')</span><span class="gl-tot">'+fmt(total)+'</span></div>';
   items.slice().sort(function(a,b){return(b._data||'').localeCompare(a._data||'');}).forEach(function(it){
@@ -608,7 +572,6 @@ function selectMes(ym){
   det.appendChild(gl);
 }
 
-// MEUS GASTOS
 function renderMeus(){
   var pid=euId(),pessoa=getPessoa(pid);
   var busca=document.getElementById('meu-busca').value.trim().toLowerCase();
@@ -640,7 +603,6 @@ function renderMeus(){
 document.getElementById('meu-cartao').addEventListener('change',renderMeus);
 document.getElementById('meu-busca').addEventListener('input',renderMeus);
 
-// HISTÓRICO
 function renderHist(){
   var fms=[...new Set(S.gastos.map(function(g){return fatYM(g.data);}))].sort();
   var fm=document.getElementById('fil-mes');var cm=fm.value;fm.innerHTML='<option value="">Todos os meses</option>'+fms.map(function(m){return'<option value="'+m+'">'+mlab(m)+'</option>';}).join('');fm.value=cm;
@@ -660,7 +622,6 @@ function renderHist(){
 ['fil-mes','fil-cartao','fil-pessoa'].forEach(function(id){document.getElementById(id).addEventListener('change',renderHist);});
 document.getElementById('fil-busca').addEventListener('input',renderHist);
 
-// ASSINATURAS
 function renderSig(){
   document.getElementById('s-cartao').innerHTML=S.cartoes.map(function(c){return'<option value="'+c.id+'">'+c.nome+'</option>';}).join('');
   document.getElementById('s-pessoa').innerHTML=S.pessoas.map(function(p){return'<option value="'+p.id+'">'+p.nome+'</option>';}).join('');
@@ -682,67 +643,55 @@ function renderConfig(){
   function makeList(elId,arr,delFn){var el=document.getElementById(elId);el.innerHTML='';if(!arr.length){el.innerHTML='<div class="empty" style="padding:1rem">Nenhum cadastrado</div>';return;}var wrap=document.createElement('div');wrap.className='tw';var table=document.createElement('table');table.innerHTML='<thead><tr><th>Cor</th><th>Nome</th><th></th></tr></thead>';var tbody=document.createElement('tbody');arr.forEach(function(item){var tr=document.createElement('tr');tr.innerHTML='<td><span style="display:inline-block;width:14px;height:14px;border-radius:50%;background:'+item.cor+'"></span></td><td>'+item.nome+'</td><td></td>';var btn=document.createElement('button');btn.className='btn-d';btn.textContent='✕ Remover';btn.addEventListener('click',function(){delFn(item.id);});tr.querySelector('td:last-child').appendChild(btn);tbody.appendChild(tr);});table.appendChild(tbody);wrap.appendChild(table);el.appendChild(wrap);}
   makeList('list-c',S.cartoes,function(id){S.cartoes=S.cartoes.filter(function(x){return x.id!==id;});save();renderConfig();toast('Cartão removido.');});
   makeList('list-p',S.pessoas,function(id){S.pessoas=S.pessoas.filter(function(x){return x.id!==id;});save();renderConfig();toast('Pessoa removida.');});
+  var inp=document.getElementById('sync-id-input');
+  inp.value=binId||'(ainda não sincronizado — adicione um gasto)';
 }
+
+document.getElementById('btn-copy-id').addEventListener('click',function(){
+  var id=document.getElementById('sync-id-input').value;
+  if(!id||id.startsWith('('))return toast('⚠ Nenhum ID ainda!',true);
+  navigator.clipboard.writeText(id).then(function(){toast('✓ ID copiado!');}).catch(function(){toast('⚠ Copie manualmente: '+id,true);});
+});
+
+document.getElementById('btn-sync-load').addEventListener('click',async function(){
+  var id=document.getElementById('sync-id-new').value.trim();
+  var msg=document.getElementById('sync-msg');
+  if(!id)return toast('⚠ Cole seu ID primeiro!',true);
+  msg.textContent='⏳ Conectando...';msg.style.color='var(--mt)';
+  try{
+    var resp=await fetch('https://api.jsonbin.io/v3/b/'+id+'/latest',{headers:{'X-Master-Key':JSONBIN_KEY}});
+    var json=await resp.json();
+    var loaded=json.record;
+    if(!loaded||!loaded.gastos||!loaded.cartoes||!loaded.pessoas)throw new Error('inválido');
+    S=loaded;if(!S.assinaturas)S.assinaturas=[];
+    binId=id;localStorage.setItem(JSONBIN_BIN_ID_KEY,binId);
+    save();renderDash();renderConfig();
+    msg.innerHTML='✅ <span style="color:var(--ac)">Dados carregados com sucesso!</span>';
+    toast('✓ Sincronizado!');
+  }catch(e){
+    msg.innerHTML='❌ <span style="color:var(--ac2)">ID inválido ou erro de conexão.</span>';
+  }
+});
+
 document.getElementById('btn-add-c').addEventListener('click',function(){var nome=document.getElementById('c-nome').value.trim(),cor=document.getElementById('c-cor').value;if(!nome)return toast('⚠ Informe o nome',true);S.cartoes.push({id:uid(),nome:nome,cor:cor});save();renderConfig();toast('Cartão adicionado!');document.getElementById('c-nome').value='';});
 document.getElementById('btn-add-p').addEventListener('click',function(){var nome=document.getElementById('p-nome').value.trim(),cor=document.getElementById('p-cor').value;if(!nome)return toast('⚠ Informe o nome',true);S.pessoas.push({id:uid(),nome:nome,cor:cor});save();renderConfig();toast('Pessoa adicionada!');document.getElementById('p-nome').value='';});
-// GOOGLE DRIVE via API Anthropic
-var DRIVE_FILE_NAME = 'gastos-emerson.json';
 
-async function driveRequest(prompt) {
-  var resp = await fetch('https://api.anthropic.com/v1/messages', {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({
-      model: 'claude-sonnet-4-20250514',
-      max_tokens: 1000,
-      messages: [{role: 'user', content: prompt}],
-      mcp_servers: [{type: 'url', url: 'https://drivemcp.googleapis.com/mcp/v1', name: 'gdrive'}]
-    })
-  });
-  return await resp.json();
-}
-
-document.getElementById('btn-drive-save').addEventListener('click', async function() {
-  var msg = document.getElementById('drive-msg');
-  msg.textContent = '⏳ Salvando no Drive...'; msg.style.color = 'var(--mt)';
-  try {
-    var content = JSON.stringify(S, null, 2);
-    var searchData = await driveRequest('Use gdrive to search for a file named "' + DRIVE_FILE_NAME + '" and return its file ID if found, or "NOT_FOUND" if not found. Return only the file ID or NOT_FOUND, nothing else.');
-    var searchText = (searchData.content || []).map(function(b){return b.text||'';}).join('');
-    var fileId = searchText.trim().replace(/[^a-zA-Z0-9_\-]/g,'');
-
-    if(fileId && fileId !== 'NOTFOUND' && fileId.length > 10) {
-      await driveRequest('Use gdrive to update the file with ID "' + fileId + '" with this content: ' + content);
-    } else {
-      await driveRequest('Use gdrive to create a new file named "' + DRIVE_FILE_NAME + '" with this JSON content: ' + content);
-    }
-    msg.innerHTML = '✅ <span style="color:var(--ac)">Salvo no Drive com sucesso!</span>';
-    toast('✓ Salvo no Google Drive!');
-  } catch(e) {
-    msg.innerHTML = '❌ <span style="color:var(--ac2)">Erro ao salvar. Tente novamente.</span>';
-  }
+// BACKUP LOCAL
+document.getElementById('btn-export').addEventListener('click',function(){
+  var a=document.createElement('a');a.href='data:application/json,'+encodeURIComponent(JSON.stringify(S,null,2));a.download='gastos-emerson.json';a.click();
+});
+document.getElementById('btn-import').addEventListener('click',function(){
+  var inp=document.createElement('input');inp.type='file';inp.accept='.json';
+  inp.onchange=function(e){
+    var f=e.target.files[0];if(!f)return;
+    var r=new FileReader();r.onload=function(ev){
+      try{var d=JSON.parse(ev.target.result);if(!d.gastos||!d.cartoes||!d.pessoas)throw new Error();S=d;if(!S.assinaturas)S.assinaturas=[];save();renderDash();toast('✓ Dados importados!');}
+      catch(err){toast('⚠ Arquivo inválido!',true);}
+    };r.readAsText(f);
+  };inp.click();
 });
 
-document.getElementById('btn-drive-load').addEventListener('click', async function() {
-  var msg = document.getElementById('drive-msg');
-  msg.textContent = '⏳ Carregando do Drive...'; msg.style.color = 'var(--mt)';
-  try {
-    var data = await driveRequest('Use gdrive to find the file named "' + DRIVE_FILE_NAME + '" and return its full content as raw JSON text only, no explanation.');
-    var text = (data.content || []).map(function(b){return b.text||'';}).join('');
-    var match = text.match(/\{[\s\S]*\}/);
-    if(!match) throw new Error('JSON not found');
-    var loaded = JSON.parse(match[0]);
-    if(!loaded.gastos || !loaded.cartoes || !loaded.pessoas) throw new Error('Invalid');
-    S = loaded; if(!S.assinaturas) S.assinaturas = [];
-    save(); renderDash();
-    msg.innerHTML = '✅ <span style="color:var(--ac)">Dados carregados do Drive!</span>';
-    toast('✓ Dados carregados do Drive!');
-  } catch(e) {
-    msg.innerHTML = '❌ <span style="color:var(--ac2)">Arquivo não encontrado ou inválido. Salve primeiro.</span>';
-  }
-});
-
-// ── JSONBIN SYNC ──
+// JSONBIN SYNC
 var JSONBIN_KEY = '$2a$10$qE3bnq.ha4E7KiW63MFanujRE6u8Ax73864nn/Ug25JwQ6j8GwZ.i';
 var JSONBIN_BIN_ID_KEY = 'gastos_emerson_bin_id';
 var binId = localStorage.getItem(JSONBIN_BIN_ID_KEY) || null;
@@ -750,24 +699,12 @@ var binId = localStorage.getItem(JSONBIN_BIN_ID_KEY) || null;
 async function cloudSave() {
   try {
     var data = JSON.stringify(S);
-    var headers = {
-      'Content-Type': 'application/json',
-      'X-Master-Key': JSONBIN_KEY,
-      'X-Bin-Name': 'gastos-emerson'
-    };
+    var headers = {'Content-Type':'application/json','X-Master-Key':JSONBIN_KEY,'X-Bin-Name':'gastos-emerson'};
     var resp, json;
     if(binId) {
-      resp = await fetch('https://api.jsonbin.io/v3/b/' + binId, {
-        method: 'PUT',
-        headers: headers,
-        body: data
-      });
+      resp = await fetch('https://api.jsonbin.io/v3/b/'+binId, {method:'PUT',headers:headers,body:data});
     } else {
-      resp = await fetch('https://api.jsonbin.io/v3/b', {
-        method: 'POST',
-        headers: Object.assign({}, headers, {'X-Bin-Private': 'true'}),
-        body: data
-      });
+      resp = await fetch('https://api.jsonbin.io/v3/b', {method:'POST',headers:Object.assign({},headers,{'X-Bin-Private':'true'}),body:data});
       json = await resp.json();
       if(json.metadata && json.metadata.id) {
         binId = json.metadata.id;
@@ -781,9 +718,7 @@ async function cloudSave() {
 async function cloudLoad() {
   if(!binId) return false;
   try {
-    var resp = await fetch('https://api.jsonbin.io/v3/b/' + binId + '/latest', {
-      headers: { 'X-Master-Key': JSONBIN_KEY }
-    });
+    var resp = await fetch('https://api.jsonbin.io/v3/b/'+binId+'/latest', {headers:{'X-Master-Key':JSONBIN_KEY}});
     var json = await resp.json();
     var loaded = json.record;
     if(loaded && loaded.gastos && loaded.cartoes && loaded.pessoas) {
@@ -801,7 +736,6 @@ save = function() {
   cloudSave();
 };
 
-// INIT — tenta carregar da nuvem, senão usa seed data já carregada
 (async function(){
   var fromCloud = await cloudLoad();
   if(fromCloud) {

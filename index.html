@@ -787,7 +787,9 @@ document.getElementById('btn-drive-load').addEventListener('click', async functi
 // ── JSONBIN SYNC ──
 var JSONBIN_KEY = '$2a$10$qE3bnq.ha4E7KiW63MFanujRE6u8Ax73864nn/Ug25JwQ6j8GwZ.i';
 var JSONBIN_BIN_ID_KEY = 'gastos_emerson_bin_id';
-var binId = localStorage.getItem(JSONBIN_BIN_ID_KEY) || null;
+var FIXED_BIN_ID = '69fec2cac0954111d8f9e1e5';
+var binId = localStorage.getItem(JSONBIN_BIN_ID_KEY) || FIXED_BIN_ID;
+if(!localStorage.getItem(JSONBIN_BIN_ID_KEY)){localStorage.setItem(JSONBIN_BIN_ID_KEY,FIXED_BIN_ID);}
 
 async function cloudSave() {
   try {

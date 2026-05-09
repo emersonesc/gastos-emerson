@@ -717,38 +717,27 @@ function renderMeus(){
 
   // Por Cartão por Mês
   var pcMes={};meusG.forEach(function(g){var v=pval(g);for(var i=0;i<g.parcelas;i++){var d=new Date(g.data+'T12:00:00');d.setMonth(d.getMonth()+1+i);var k=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0');if(!pcMes[k])pcMes[k]={};if(!pcMes[k][g.cartao])pcMes[k][g.cartao]={total:0,items:[]};pcMes[k][g.cartao].total+=v;pcMes[k][g.cartao].items.push(gastoToItem(g,i+1));}});
-  var cartoesAtivos=S.cartoes.filter(function(c){return Object.keys(pcMes).some(function(m){return pcMes[m][c.id]&&pcMes[m][c.id].total>0;});});
-  if(cartoesAtivos.length&&meses.length){
+  var cartoesComGasto=S.cartoes.filter(function(c){return Object.keys(pcMes).some(function(m){return pcMes[m][c.id]&&pcMes[m][c.id].total>0;});});
+  if(cartoesComGasto.length&&meses.length){
     var tCM=document.createElement('p');tCM.className='stl';tCM.textContent='Por Cartão por Mês';con.appendChild(tCM);
-    var cmWrap=document.createElement('div');cmWrap.className='tw';
-    var cmTable=document.createElement('table');
-    cmTable.innerHTML='<thead><tr><th>Mês</th>'+cartoesAtivos.map(function(c){return'<th><span style="color:'+c.cor+'">'+c.nome+'</span></th>';}).join('')+'<th>Total</th></tr></thead>';
-    var cmBody=document.createElement('tbody');
     meses.slice().reverse().forEach(function(m){
-      var rowTot=cartoesAtivos.reduce(function(s,c){return s+((pcMes[m]&&pcMes[m][c.id]&&pcMes[m][c.id].total)||0);},0);
-      if(!rowTot)return;
+      var mTot=cartoesComGasto.reduce(function(s,c){return s+((pcMes[m]&&pcMes[m][c.id]&&pcMes[m][c.id].total)||0);},0);
+      if(!mTot)return;
       var isFut=m>=ym;
-      var tr=document.createElement('tr');
-      var tdMes=document.createElement('td');
-      tdMes.style.cssText='color:'+(isFut?'var(--ac)':'inherit')+';font-weight:'+(m===ym?'700':'400')+';cursor:pointer';
-      tdMes.textContent=mlab(m)+(m===ym?' ✦':'');
-      tdMes.addEventListener('click',(function(mm){return function(){openModal(mlab(mm),isFut?'var(--ac)':pessoa.cor,pf[mm]?pf[mm].items:[]);};})(m));
-      tr.appendChild(tdMes);
-      cartoesAtivos.forEach(function(c){
-        var td=document.createElement('td');
-        if(pcMes[m]&&pcMes[m][c.id]&&pcMes[m][c.id].total){
-          var sp=document.createElement('span');
-          sp.style.cssText='color:'+c.cor+';font-weight:600;cursor:pointer;text-decoration:underline dotted';
-          sp.textContent=fmt(pcMes[m][c.id].total);
-          sp.addEventListener('click',(function(ti,co,it){return function(){openModal(ti,co,it);};})(c.nome+' · '+mlab(m),c.cor,pcMes[m][c.id].items));
-          td.appendChild(sp);
-        }else{td.innerHTML='<span style="color:var(--bd)">—</span>';}
-        tr.appendChild(td);
+      var mHdr=document.createElement('div');
+      mHdr.style.cssText='display:flex;justify-content:space-between;align-items:center;margin:1rem 0 0.3rem;padding:0 0.2rem';
+      mHdr.innerHTML='<span style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:'+(isFut?'var(--ac)':'var(--mt)')+'">'+mlab(m)+(m===ym?' ✦':'')+'</span><span style="font-size:0.85rem;font-weight:700;font-family:\'Syne\',sans-serif;color:'+(isFut?'var(--ac)':'var(--tx)')+'">'+fmt(mTot)+'</span>';
+      con.appendChild(mHdr);
+      var dt=document.createElement('div');dt.className='dt';dt.style.marginBottom='0.5rem';
+      cartoesComGasto.forEach(function(c){
+        if(!pcMes[m]||!pcMes[m][c.id]||!pcMes[m][c.id].total)return;
+        var row=document.createElement('div');row.className='dt-row';row.style.cursor='pointer';
+        row.innerHTML='<div class="dt-l"><span class="dt-dot" style="background:'+c.cor+'"></span>'+c.nome+'</div><div class="dt-vl" style="color:'+c.cor+'">'+fmt(pcMes[m][c.id].total)+'</div>';
+        row.addEventListener('click',(function(ti,co,it){return function(){openModal(ti,co,it);};})(c.nome+' · '+mlab(m),c.cor,pcMes[m][c.id].items));
+        dt.appendChild(row);
       });
-      var tdTot=document.createElement('td');tdTot.style.fontWeight='700';tdTot.textContent=fmt(rowTot);tr.appendChild(tdTot);
-      cmBody.appendChild(tr);
+      con.appendChild(dt);
     });
-    cmTable.appendChild(cmBody);cmWrap.appendChild(cmTable);con.appendChild(cmWrap);
   }
   var t3=document.createElement('p');t3.className='stl';t3.textContent='Todos os Gastos';con.appendChild(t3);
   var list=_sort(meusG.filter(function(g){if(cartF&&g.cartao!==cartF)return false;if(busca&&!g.desc.toLowerCase().includes(busca))return false;return true;}),_sM.col,_sM.asc);

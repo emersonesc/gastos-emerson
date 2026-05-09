@@ -116,6 +116,10 @@ tr:hover td{background:var(--sf2)}
 @media(min-width:500px){.toast{left:auto;max-width:320px}}
 .toast.show{transform:translateY(0);opacity:1}
 </style>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#060e09">
+<meta name="apple-mobile-web-app-capable" content="yes">
 </head>
 <body>
 <header>
@@ -126,6 +130,7 @@ tr:hover td{background:var(--sf2)}
     <button class="tab" id="btn-meus" onclick="showView('meus')">Meus Gastos</button>
     <button class="tab" id="btn-historico" onclick="showView('historico')">Histórico</button>
     <button class="tab" id="btn-assinaturas" onclick="showView('assinaturas')">Assinaturas</button>
+    <button class="tab" id="btn-parcelas" onclick="showView('parcelas')">Parcelamentos</button>
     <button class="tbtn" id="btn-sync" title="Sincronizar com a nuvem">☁</button>
     <button class="tab" id="btn-config" onclick="showView('config')">Cartões</button>
     <button class="tbtn" id="tbtn">🌙</button>
@@ -142,6 +147,10 @@ tr:hover td{background:var(--sf2)}
       <div class="dt"><div class="dt-hd">Por Cartão</div><div id="body-c"></div></div>
       <div class="dt"><div class="dt-hd">Por Pessoa</div><div id="body-p"></div></div>
     </div>
+    <p class="stl">Evolução Mensal</p>
+    <div class="fc" style="padding:1.25rem;margin-bottom:1.5rem"><canvas id="chart-meses" height="90"></canvas></div>
+    <p class="stl">Por Pessoa</p>
+    <div class="fc" style="padding:1.25rem;margin-bottom:1.5rem;max-width:500px"><canvas id="chart-pessoas"></canvas></div>
     <p class="stl" id="det-title">Detalhes do Mês</p>
     <div id="det-content"></div>
   </div>
@@ -213,6 +222,11 @@ tr:hover td{background:var(--sf2)}
     </div>
     <div id="sig-tot-line" style="margin-bottom:1rem;font-size:0.85rem"></div>
     <div class="sig-grid" id="sig-grid"></div>
+  </div>
+
+  <div id="view-parcelas" class="view">
+    <p class="stl">Parcelamentos Ativos</p>
+    <div id="parc-content"></div>
   </div>
 
   <div id="view-config" class="view">
@@ -291,6 +305,33 @@ var S=(function(){
 })()||SEED_DATA;
 if(!S.assinaturas)S.assinaturas=[];
 var editId=null,tipoAtual='av';
+var _charts={};
+var _sH={col:'data',asc:false},_sM={col:'data',asc:false};
+function _sort(list,col,asc){
+  return list.slice().sort(function(a,b){
+    var av,bv;
+    switch(col){
+      case'data':av=a.data;bv=b.data;break;
+      case'desc':av=(a.desc||'').toLowerCase();bv=(b.desc||'').toLowerCase();break;
+      case'fatura':av=fatYM(a.data);bv=fatYM(b.data);break;
+      case'pval':av=pval(a);bv=pval(b);break;
+      case'total':av=a.valor;bv=b.valor;break;
+      case'parc':av=a.parcelas;bv=b.parcelas;break;
+      case'rest':av=parcRest(a);bv=parcRest(b);break;
+      default:av=a.data;bv=b.data;
+    }
+    return typeof av==='string'?(asc?av.localeCompare(bv):bv.localeCompare(av)):(asc?av-bv:bv-av);
+  });
+}
+function _thSort(th,col,state,render){
+  var base=th.textContent;
+  th.style.cursor='pointer';th.style.userSelect='none';
+  th.textContent=base+(state.col===col?(state.asc?' ▲':' ▼'):'');
+  th.addEventListener('click',function(){
+    if(state.col===col)state.asc=!state.asc;else{state.col=col;state.asc=true;}
+    render();
+  });
+}
 
 function save(){try{localStorage.setItem('fintrack2',JSON.stringify(S));}catch(e){}}
 function uid(){return '_'+Math.random().toString(36).substr(2,9);}
@@ -394,6 +435,7 @@ function showView(v){
   if(v==='config')renderConfig();
   if(v==='meus')renderMeus();
   if(v==='assinaturas')renderSig();
+  if(v==='parcelas')renderParcelamentos();
 }
 
 function setTipo(t){
@@ -503,6 +545,30 @@ function renderDash(){
   if(!S.pessoas.length){bpEl.innerHTML='<div style="padding:1rem;font-size:0.82rem;color:var(--mt)">Nenhuma pessoa</div>';}
   else{S.pessoas.forEach(function(p){var row=document.createElement('div');row.className='dt-row';row.innerHTML='<div class="dt-l"><span class="dt-dot" style="background:'+p.cor+'"></span>'+p.nome+'</div><div class="dt-vl" style="color:'+p.cor+'">'+fmt(pTots[p.id])+'</div>';var mi=pItems[p.id];row.addEventListener('click',function(){openModal(p.nome,p.cor,mi);});bpEl.appendChild(row);});}
   if(meses.length)selectMes(meses[0]);
+  if(typeof Chart!=='undefined')renderCharts(pf);
+}
+
+function renderCharts(pf){
+  var isDark=document.documentElement.getAttribute('data-theme')==='dark';
+  var gridC=isDark?'#1e4a28':'#bbf7d0',tickC=isDark?'#6b9a79':'#4b7a5e',txC=isDark?'#f0fdf4':'#052e16';
+  var allMs=Object.keys(pf).sort();
+  if(_charts.meses)_charts.meses.destroy();
+  _charts.meses=new Chart(document.getElementById('chart-meses'),{
+    type:'bar',
+    data:{labels:allMs.map(mlab),datasets:[{data:allMs.map(function(m){return pf[m]||0;}),backgroundColor:'rgba(74,222,128,0.28)',borderColor:'rgba(74,222,128,0.75)',borderWidth:1,borderRadius:4}]},
+    options:{responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return' '+fmt(c.raw);}}}},scales:{
+      y:{ticks:{callback:function(v){return'R$'+(v>=1000?(v/1000).toFixed(0)+'k':v.toFixed(0));},color:tickC,font:{family:'DM Mono',size:10}},grid:{color:gridC},border:{display:false}},
+      x:{ticks:{color:tickC,font:{family:'DM Mono',size:10}},grid:{display:false},border:{display:false}}
+    }}
+  });
+  var pFilt=S.pessoas.filter(function(p){return S.gastos.some(function(g){return g.pessoa===p.id;});});
+  var pVals=pFilt.map(function(p){return S.gastos.filter(function(g){return g.pessoa===p.id;}).reduce(function(s,g){return s+g.valor;},0);});
+  if(_charts.pessoas)_charts.pessoas.destroy();
+  _charts.pessoas=new Chart(document.getElementById('chart-pessoas'),{
+    type:'doughnut',
+    data:{labels:pFilt.map(function(p){return p.nome;}),datasets:[{data:pVals,backgroundColor:pFilt.map(function(p){return p.cor+'55';}),borderColor:pFilt.map(function(p){return p.cor;}),borderWidth:2}]},
+    options:{responsive:true,cutout:'65%',plugins:{legend:{position:'right',labels:{color:txC,font:{family:'DM Mono',size:11},padding:10,boxWidth:12}},tooltip:{callbacks:{label:function(c){return' '+fmt(c.raw);}}}}}
+  });
 }
 
 function selectMes(ym){
@@ -573,10 +639,12 @@ function renderMeus(){
   var pcT={};S.cartoes.forEach(function(c){pcT[c.id]={total:0,items:[]};});meusG.forEach(function(g){if(pcT[g.cartao]){pcT[g.cartao].total+=g.valor;pcT[g.cartao].items.push(gastoToItem(g,1));}});
   if(S.cartoes.some(function(c){return pcT[c.id].total>0;})){var t2=document.createElement('p');t2.className='stl';t2.textContent='Por Cartão';con.appendChild(t2);var dtC=document.createElement('div');dtC.className='dt';dtC.style.marginBottom='1.5rem';S.cartoes.forEach(function(c){if(!pcT[c.id].total)return;var row=document.createElement('div');row.className='dt-row';row.innerHTML='<div class="dt-l"><span class="dt-dot" style="background:'+c.cor+'"></span>'+c.nome+'</div><div class="dt-vl" style="color:'+c.cor+'">'+fmt(pcT[c.id].total)+'</div>';var mi=pcT[c.id].items;row.addEventListener('click',function(){openModal(c.nome,c.cor,mi);});dtC.appendChild(row);});con.appendChild(dtC);}
   var t3=document.createElement('p');t3.className='stl';t3.textContent='Todos os Gastos';con.appendChild(t3);
-  var list=meusG.filter(function(g){if(cartF&&g.cartao!==cartF)return false;if(busca&&!g.desc.toLowerCase().includes(busca))return false;return true;}).sort(function(a,b){return b.data.localeCompare(a.data);});
+  var list=_sort(meusG.filter(function(g){if(cartF&&g.cartao!==cartF)return false;if(busca&&!g.desc.toLowerCase().includes(busca))return false;return true;}),_sM.col,_sM.asc);
   if(!list.length){var d=document.createElement('div');d.className='empty';d.innerHTML='<span class="e">🔍</span>Sem gastos';con.appendChild(d);return;}
   var wrap=document.createElement('div');wrap.className='tw';var table=document.createElement('table');
   table.innerHTML='<thead><tr><th>Compra</th><th>Fatura</th><th>Descrição</th><th>Cartão</th><th>Parc</th><th>Restam</th><th>Parc/Mês</th><th>Total</th><th></th></tr></thead>';
+  var _mc=['data','fatura','desc',null,'parc','rest','pval','total',null];
+  Array.from(table.querySelectorAll('th')).forEach(function(th,i){if(_mc[i])_thSort(th,_mc[i],_sM,renderMeus);});
   var tbody=document.createElement('tbody');
   list.forEach(function(g){var c=getCartao(g.cartao),v=pval(g),rest=parcRest(g);var tr=document.createElement('tr');tr.innerHTML='<td>'+g.data.split('-').reverse().join('/')+'</td><td style="color:var(--ac3)">'+mlab(fatYM(g.data))+'</td><td>'+g.desc+'</td><td><span class="badge" style="background:'+c.cor+'22;color:'+c.cor+'">'+c.nome+'</span></td><td>'+g.parcelas+'×</td><td><span style="color:'+(rest<=2?'var(--ac2)':'var(--ac)')+';font-weight:600">'+rest+' rest.</span></td><td style="font-weight:600">'+fmt(v)+'</td><td style="color:var(--mt)">'+fmt(g.valor)+'</td><td style="white-space:nowrap"></td>';
   var td=tr.querySelector('td:last-child');var be=document.createElement('button');be.className='btn-e';be.textContent='✏️';be.addEventListener('click',function(){openEdit(g.id);});var bd=document.createElement('button');bd.className='btn-d';bd.textContent='✕';bd.addEventListener('click',function(){S.gastos=S.gastos.filter(function(x){return x.id!==g.id;});save();renderMeus();toast('Gasto removido.');});td.appendChild(be);td.appendChild(bd);tbody.appendChild(tr);});
@@ -591,11 +659,13 @@ function renderHist(){
   var fc=document.getElementById('fil-cartao');var cc=fc.value;fc.innerHTML='<option value="">Todos os cartões</option>'+S.cartoes.map(function(c){return'<option value="'+c.id+'">'+c.nome+'</option>';}).join('');fc.value=cc;
   var fp=document.getElementById('fil-pessoa');var cp=fp.value;fp.innerHTML='<option value="">Todas as pessoas</option>'+S.pessoas.map(function(p){return'<option value="'+p.id+'">'+p.nome+'</option>';}).join('');fp.value=cp;
   var mes=fm.value,cart=fc.value,pess=fp.value,busca=document.getElementById('fil-busca').value.trim().toLowerCase();
-  var list=S.gastos.filter(function(g){if(mes&&fatYM(g.data)!==mes)return false;if(cart&&g.cartao!==cart)return false;if(pess&&g.pessoa!==pess)return false;if(busca&&!g.desc.toLowerCase().includes(busca))return false;return true;}).sort(function(a,b){return b.data.localeCompare(a.data);});
+  var list=_sort(S.gastos.filter(function(g){if(mes&&fatYM(g.data)!==mes)return false;if(cart&&g.cartao!==cart)return false;if(pess&&g.pessoa!==pess)return false;if(busca&&!g.desc.toLowerCase().includes(busca))return false;return true;}),_sH.col,_sH.asc);
   var con=document.getElementById('hist-wrap');con.innerHTML='';
   if(!list.length){var d=document.createElement('div');d.className='empty';d.innerHTML='<span class="e">🔍</span>Nenhum gasto';con.appendChild(d);return;}
   var wrap=document.createElement('div');wrap.className='tw';var table=document.createElement('table');
   table.innerHTML='<thead><tr><th>Compra</th><th>Fatura</th><th>Descrição</th><th>Cartão</th><th>Pessoa</th><th>Parc</th><th>Restam</th><th>Parc/Mês</th><th>Total</th><th></th></tr></thead>';
+  var _hc=['data','fatura','desc',null,null,'parc','rest','pval','total',null];
+  Array.from(table.querySelectorAll('th')).forEach(function(th,i){if(_hc[i])_thSort(th,_hc[i],_sH,renderHist);});
   var tbody=document.createElement('tbody');
   list.forEach(function(g){var c=getCartao(g.cartao),p=getPessoa(g.pessoa),v=pval(g),rest=parcRest(g);var tr=document.createElement('tr');tr.innerHTML='<td>'+g.data.split('-').reverse().join('/')+'</td><td style="color:var(--ac3)">'+mlab(fatYM(g.data))+'</td><td>'+g.desc+'</td><td><span class="badge" style="background:'+c.cor+'22;color:'+c.cor+'">'+c.nome+'</span></td><td><span class="pill" style="background:'+p.cor+'22;color:'+p.cor+'"><span class="dot" style="background:'+p.cor+'"></span>'+p.nome+'</span></td><td>'+g.parcelas+'×</td><td><span style="color:'+(rest<=2?'var(--ac2)':'var(--ac)')+';font-weight:600">'+rest+' rest.</span></td><td style="font-weight:600">'+fmt(v)+'</td><td style="color:var(--mt)">'+fmt(g.valor)+'</td><td style="white-space:nowrap"></td>';
   var td=tr.querySelector('td:last-child');var be=document.createElement('button');be.className='btn-e';be.textContent='✏️';be.addEventListener('click',function(){openEdit(g.id);});var bd=document.createElement('button');bd.className='btn-d';bd.textContent='✕';bd.addEventListener('click',function(){S.gastos=S.gastos.filter(function(x){return x.id!==g.id;});save();renderHist();toast('Gasto removido.');});td.appendChild(be);td.appendChild(bd);tbody.appendChild(tr);});
@@ -613,6 +683,35 @@ function renderSig(){
   if(!S.assinaturas.length){grid.innerHTML='<div class="empty" style="grid-column:1/-1"><span class="e">📺</span>Nenhuma assinatura</div>';return;}
   S.assinaturas.forEach(function(a){var c=getCartao(a.cartao),p=getPessoa(a.pessoa);var card=document.createElement('div');card.className='sig-card';var bar=document.createElement('div');bar.style.cssText='position:absolute;top:0;left:0;right:0;height:3px;background:'+a.cor;card.appendChild(bar);var nm=document.createElement('div');nm.className='sig-nm';nm.textContent=a.nome;card.appendChild(nm);var vl=document.createElement('div');vl.className='sig-vl';vl.innerHTML=fmt(a.valor)+'<span style="color:var(--mt);font-size:0.72rem">/mês</span>';card.appendChild(vl);var mt=document.createElement('div');mt.className='sig-mt';mt.innerHTML='📅 Todo dia '+a.dia+' · <span style="color:'+c.cor+'">'+c.nome+'</span> · '+p.nome;card.appendChild(mt);var acts=document.createElement('div');acts.style.marginTop='0.75rem';var bd=document.createElement('button');bd.className='btn-d';bd.textContent='✕ Remover';bd.addEventListener('click',function(){S.assinaturas=S.assinaturas.filter(function(x){return x.id!==a.id;});save();renderSig();toast('Assinatura removida.');});acts.appendChild(bd);card.appendChild(acts);grid.appendChild(card);});
 }
+function renderParcelamentos(){
+  var con=document.getElementById('parc-content');con.innerHTML='';
+  var ativos=S.gastos.filter(function(g){return g.parcelas>1&&parcRest(g)>0;}).sort(function(a,b){return parcRest(a)-parcRest(b);});
+  if(!ativos.length){con.innerHTML='<div class="empty"><span class="e">🎉</span>Nenhum parcelamento ativo</div>';return;}
+  var totRest=ativos.reduce(function(s,g){return s+pval(g)*parcRest(g);},0);
+  con.innerHTML='<div style="display:grid;grid-template-columns:1fr 1fr;gap:0.85rem;margin-bottom:1.5rem">'+
+    '<div class="sc c2"><div class="sc-lb">Total em dívidas</div><div class="sc-vl">'+fmt(totRest)+'</div></div>'+
+    '<div class="sc c4"><div class="sc-lb">Parcelamentos ativos</div><div class="sc-vl">'+ativos.length+'</div></div></div>';
+  var wrap=document.createElement('div');wrap.className='tw';
+  var table=document.createElement('table');
+  table.innerHTML='<thead><tr><th>Descrição</th><th>Cartão</th><th>Pessoa</th><th>Parc/Mês</th><th>Restam</th><th>Restante</th><th>Término</th></tr></thead>';
+  var tbody=document.createElement('tbody');
+  ativos.forEach(function(g){
+    var c=getCartao(g.cartao),p=getPessoa(g.pessoa),rest=parcRest(g),restVal=pval(g)*rest;
+    var endD=new Date(g.data+'T12:00:00');endD.setMonth(endD.getMonth()+g.parcelas);
+    var endYM=endD.getFullYear()+'-'+String(endD.getMonth()+1).padStart(2,'0');
+    var tr=document.createElement('tr');
+    tr.innerHTML='<td>'+g.desc+'</td>'+
+      '<td><span class="badge" style="background:'+c.cor+'22;color:'+c.cor+'">'+c.nome+'</span></td>'+
+      '<td><span class="pill" style="background:'+p.cor+'22;color:'+p.cor+'"><span class="dot" style="background:'+p.cor+'"></span>'+p.nome+'</span></td>'+
+      '<td style="font-weight:600">'+fmt(pval(g))+'</td>'+
+      '<td><span style="color:'+(rest<=2?'var(--ac2)':'var(--ac)')+';font-weight:600">'+rest+'×</span></td>'+
+      '<td style="font-weight:700;color:var(--ac2)">'+fmt(restVal)+'</td>'+
+      '<td style="color:var(--mt)">'+mlab(endYM)+'</td>';
+    tbody.appendChild(tr);
+  });
+  table.appendChild(tbody);wrap.appendChild(table);con.appendChild(wrap);
+}
+
 document.getElementById('btn-add-sig').addEventListener('click',function(){
   var nome=document.getElementById('s-nome').value.trim();var valor=parseFloat(document.getElementById('s-val').value);
   if(!nome||!valor)return toast('⚠ Preencha nome e valor!',true);
@@ -695,6 +794,12 @@ document.getElementById('btn-sync').addEventListener('click',async function(){
   else{toast('⚠ Erro ao sincronizar',true);}
   btn.textContent='☁';btn.disabled=false;
 });
+
+if('serviceWorker' in navigator){
+  window.addEventListener('load',function(){
+    navigator.serviceWorker.register('sw.js').catch(function(){});
+  });
+}
 </script>
 </body>
 </html>

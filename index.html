@@ -651,6 +651,80 @@ function renderMeus(){
   var pf={};
   meusG.forEach(function(g){var v=pval(g);for(var i=0;i<g.parcelas;i++){var d=new Date(g.data+'T12:00:00');d.setMonth(d.getMonth()+1+i);var k=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0');if(!pf[k])pf[k]={total:0,items:[]};pf[k].total+=v;pf[k].items.push(gastoToItem(g,i+1));}});
   var meses=Object.keys(pf).sort(),ym=nowYM();
+
+  // Stats cards
+  var totGeral=meusG.reduce(function(s,g){return s+g.valor;},0);
+  var fatAtual=(pf[ym]||{total:0}).total;
+  var parcResto=meusG.filter(function(g){return g.parcelas>1&&parcRest(g)>0;}).reduce(function(s,g){return s+pval(g)*parcRest(g);},0);
+  var sigTot=S.assinaturas.filter(function(a){return a.pessoa===pid;}).reduce(function(s,a){return s+a.valor;},0);
+  var stats=document.createElement('div');stats.className='cards';stats.style.marginBottom='1.5rem';
+  stats.innerHTML=
+    '<div class="sc c1"><div class="sc-lb">Total Gasto</div><div class="sc-vl">'+fmt(totGeral)+'</div></div>'+
+    '<div class="sc c2"><div class="sc-lb">Fatura Mês Atual</div><div class="sc-vl">'+fmt(fatAtual)+'</div></div>'+
+    '<div class="sc c3"><div class="sc-lb">Parcelas Restantes</div><div class="sc-vl">'+fmt(parcResto)+'</div></div>'+
+    '<div class="sc c4"><div class="sc-lb">Assinaturas/Mês</div><div class="sc-vl">'+fmt(sigTot)+'</div></div>';
+  con.appendChild(stats);
+
+  // Evolução mensal (chart)
+  if(typeof Chart!=='undefined'&&Object.keys(pf).length){
+    var pEv=document.createElement('p');pEv.className='stl';pEv.textContent='Evolução Mensal';con.appendChild(pEv);
+    var cWrap=document.createElement('div');cWrap.className='fc';cWrap.style.cssText='padding:1.25rem;margin-bottom:1.5rem';
+    var cvs=document.createElement('canvas');cvs.height=80;cWrap.appendChild(cvs);con.appendChild(cWrap);
+    var allMs=Object.keys(pf).sort();
+    var isDark=document.documentElement.getAttribute('data-theme')==='dark';
+    var tickC=isDark?'#6b9a79':'#4b7a5e',gridC=isDark?'#1e4a28':'#bbf7d0';
+    if(_charts.meusEv)_charts.meusEv.destroy();
+    _charts.meusEv=new Chart(cvs,{
+      type:'bar',
+      data:{labels:allMs.map(mlab),datasets:[{data:allMs.map(function(m){return pf[m].total;}),backgroundColor:allMs.map(function(m){return m===ym?'rgba(74,222,128,0.6)':'rgba(134,239,172,0.28)';}),borderColor:allMs.map(function(m){return m===ym?'rgba(74,222,128,1)':'rgba(134,239,172,0.75)';}),borderWidth:1,borderRadius:4}]},
+      options:{responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return' '+fmt(c.raw);}}}},scales:{
+        y:{ticks:{callback:function(v){return'R$'+(v>=1000?(v/1000).toFixed(0)+'k':v.toFixed(0));},color:tickC,font:{family:'DM Mono',size:10}},grid:{color:gridC},border:{display:false}},
+        x:{ticks:{color:tickC,font:{family:'DM Mono',size:10}},grid:{display:false},border:{display:false}}
+      }}
+    });
+  }
+
+  // Minhas assinaturas
+  var minhasSigs=S.assinaturas.filter(function(a){return a.pessoa===pid;});
+  if(minhasSigs.length){
+    var tSig=document.createElement('p');tSig.className='stl';tSig.textContent='Minhas Assinaturas';con.appendChild(tSig);
+    var sGrid=document.createElement('div');sGrid.className='sig-grid';
+    minhasSigs.forEach(function(a){
+      var c=getCartao(a.cartao);
+      var card=document.createElement('div');card.className='sig-card';
+      var bbar=document.createElement('div');bbar.style.cssText='position:absolute;top:0;left:0;right:0;height:3px;background:'+a.cor;card.appendChild(bbar);
+      var snm=document.createElement('div');snm.className='sig-nm';snm.textContent=a.nome;card.appendChild(snm);
+      var svl=document.createElement('div');svl.className='sig-vl';svl.innerHTML=fmt(a.valor)+'<span style="color:var(--mt);font-size:0.72rem">/mês</span>';card.appendChild(svl);
+      var smt=document.createElement('div');smt.className='sig-mt';smt.innerHTML='📅 Todo dia '+a.dia+' · <span style="color:'+c.cor+'">'+c.nome+'</span>';card.appendChild(smt);
+      sGrid.appendChild(card);
+    });
+    con.appendChild(sGrid);
+  }
+
+  // Meus parcelamentos ativos
+  var meusParc=meusG.filter(function(g){return g.parcelas>1&&parcRest(g)>0;}).sort(function(a,b){return parcRest(a)-parcRest(b);});
+  if(meusParc.length){
+    var tParc=document.createElement('p');tParc.className='stl';tParc.textContent='Parcelamentos Ativos';con.appendChild(tParc);
+    var pWrap=document.createElement('div');pWrap.className='tw';
+    var pTable=document.createElement('table');
+    pTable.innerHTML='<thead><tr><th>Descrição</th><th>Cartão</th><th>Parc/Mês</th><th>Restam</th><th>Restante</th><th>Término</th></tr></thead>';
+    var pBody=document.createElement('tbody');
+    meusParc.forEach(function(g){
+      var c=getCartao(g.cartao),rest=parcRest(g),restVal=pval(g)*rest;
+      var endD=new Date(g.data+'T12:00:00');endD.setMonth(endD.getMonth()+g.parcelas);
+      var endYM=endD.getFullYear()+'-'+String(endD.getMonth()+1).padStart(2,'0');
+      var tr=document.createElement('tr');
+      tr.innerHTML='<td>'+g.desc+'</td>'+
+        '<td><span class="badge" style="background:'+c.cor+'22;color:'+c.cor+'">'+c.nome+'</span></td>'+
+        '<td style="font-weight:600">'+fmt(pval(g))+'</td>'+
+        '<td><span style="color:'+(rest<=2?'var(--ac2)':'var(--ac)')+';font-weight:600">'+rest+'×</span></td>'+
+        '<td style="font-weight:700;color:var(--ac2)">'+fmt(restVal)+'</td>'+
+        '<td style="color:var(--mt)">'+mlab(endYM)+'</td>';
+      pBody.appendChild(tr);
+    });
+    pTable.appendChild(pBody);pWrap.appendChild(pTable);con.appendChild(pWrap);
+  }
+
   if(meses.length){
     var t=document.createElement('p');t.className='stl';t.textContent='Faturas por Mês';con.appendChild(t);
     var grid=document.createElement('div');grid.style.cssText='display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:0.6rem;margin-bottom:1.5rem';

@@ -1,5 +1,5 @@
-const CACHE = 'gastos-v1';
-const FILES = ['/', '/index.html', '/manifest.json', '/icon.svg'];
+const CACHE = 'gastos-v2';
+const FILES = ['.', './index.html', './manifest.json', './icon.svg'];
 
 self.addEventListener('install', function(e) {
   e.waitUntil(
@@ -19,7 +19,7 @@ self.addEventListener('activate', function(e) {
 
 self.addEventListener('fetch', function(e) {
   if(e.request.method !== 'GET') return;
-  if(e.request.url.includes('jsonbin.io') || e.request.url.includes('fonts.google')) return;
+  if(e.request.url.includes('jsonbin.io') || e.request.url.includes('fonts.google') || e.request.url.includes('cdn.jsdelivr')) return;
   e.respondWith(
     caches.match(e.request).then(function(r) {
       return r || fetch(e.request).then(function(resp) {
@@ -27,6 +27,6 @@ self.addEventListener('fetch', function(e) {
         caches.open(CACHE).then(function(c){c.put(e.request, clone);});
         return resp;
       });
-    }).catch(function() { return caches.match('/index.html'); })
+    }).catch(function() { return caches.match('./index.html'); })
   );
 });

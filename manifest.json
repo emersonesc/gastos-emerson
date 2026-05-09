@@ -1,0 +1,18 @@
+{
+  "name": "Gastos Emerson",
+  "short_name": "Gastos",
+  "description": "Controle de gastos pessoais",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#060e09",
+  "theme_color": "#060e09",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

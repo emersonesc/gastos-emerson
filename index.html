@@ -306,10 +306,11 @@ tr:hover td{background:var(--sf2)}
 
 <script>
 var ML=['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+var SEED_DATA={"cartoes":[{"id":"_x0f5vx00z","nome":"DIGIO","cor":"#69f7c1"},{"id":"_ntashgjv3","nome":"C6","cor":"#f79b69"},{"id":"_lt1au0b3i","nome":"INTER","cor":"#bc5d10"},{"id":"_39h26pbip","nome":"BRADESCO","cor":"#e82517"},{"id":"_v4dyofk84","nome":"MERCADO PAGO","cor":"#b329ae"},{"id":"_dqsryqo87","nome":"AMAZON","cor":"#b0eb0f"}],"pessoas":[{"id":"_lbfte75cx","nome":"VITOR","cor":"#6981f7"},{"id":"_oy295edg9","nome":"ANDRÉ","cor":"#aa2c3f"},{"id":"_awyk8oxrb","nome":"MÃE","cor":"#47aa2c"},{"id":"_xnteenkbb","nome":"EU","cor":"#04072a"},{"id":"_l36dhxxxr","nome":"THAINA","cor":"#8c42ae"},{"id":"_0iatawy1z","nome":"OUTRAS PESSOAS","cor":"#cb2aa0"},{"id":"_opdhe9pbh","nome":"ANA","cor":"#d2df20"}],"gastos":[{"id":"_8ic8lcq14","desc":"VITOR PARCELA","valor":11242.27,"data":"2026-04-18","cartao":"_x0f5vx00z","pessoa":"_lbfte75cx","parcelas":10,"cat":"Outros"},{"id":"_l9eud3sjd","desc":"PASSAGEM THAINA","valor":1024.14,"data":"2026-02-23","cartao":"_x0f5vx00z","pessoa":"_l36dhxxxr","parcelas":4,"cat":"Transporte"},{"id":"_60bbdoymh","desc":"BAW","valor":127.77,"data":"2026-04-20","cartao":"_x0f5vx00z","pessoa":"_xnteenkbb","parcelas":1,"cat":"Compras"},{"id":"_sl6lmp54r","desc":"ALMOÇO PIRAKAIA","valor":200,"data":"2026-04-20","cartao":"_x0f5vx00z","pessoa":"_xnteenkbb","parcelas":1,"cat":"Compras"},{"id":"_nvbjp5s1r","desc":"TAPETE TORRA","valor":134,"data":"2026-04-20","cartao":"_x0f5vx00z","pessoa":"_xnteenkbb","parcelas":1,"cat":"Compras"},{"id":"_pkaundvtc","desc":"DROGARIA FARMACIA","valor":81,"data":"2026-04-20","cartao":"_x0f5vx00z","pessoa":"_xnteenkbb","parcelas":1,"cat":"Compras"},{"id":"_jhl2kvkpn","desc":"GELADEIRA VÓ","valor":3099,"parcval":309.9,"data":"2025-10-20","cartao":"_x0f5vx00z","pessoa":"_0iatawy1z","parcelas":10},{"id":"_toylpwqat","desc":"PASSAGEM IRMÃ SEU REINALDO","valor":2686.85,"parcval":537.37,"data":"2026-03-19","cartao":"_x0f5vx00z","pessoa":"_0iatawy1z","parcelas":5},{"id":"_qytm3sjjb","desc":"COMPRAS EU","valor":601.02,"parcval":300.51,"data":"2026-05-01","cartao":"_dqsryqo87","pessoa":"_xnteenkbb","parcelas":2},{"id":"_49n9xtp2g","desc":"PARCELAMENTO","valor":2850,"parcval":570,"data":"2026-01-20","cartao":"_39h26pbip","pessoa":"_xnteenkbb","parcelas":5},{"id":"_9ixzv5yu6","desc":"HAVAN","valor":509.9,"parcval":50.99,"data":"2025-10-30","cartao":"_39h26pbip","pessoa":"_awyk8oxrb","parcelas":10},{"id":"_o0lrww0nt","desc":"PARCELAMENTO","valor":11403.72,"parcval":950.31,"data":"2025-12-12","cartao":"_39h26pbip","pessoa":"_lbfte75cx","parcelas":12},{"id":"_9pr8fbblb","desc":"APPLE","valor":34.9,"parcval":34.9,"data":"2026-04-30","cartao":"_lt1au0b3i","pessoa":"_oy295edg9","parcelas":1},{"id":"_jr5nnnuww","desc":"UBER","valor":18.01,"parcval":18.01,"data":"2026-04-30","cartao":"_lt1au0b3i","pessoa":"_oy295edg9","parcelas":1},{"id":"_3g9rbgldv","desc":"APPLE","valor":5.9,"parcval":5.9,"data":"2026-04-30","cartao":"_lt1au0b3i","pessoa":"_oy295edg9","parcelas":1},{"id":"_erwax02xp","desc":"UBER","valor":18.95,"parcval":18.95,"data":"2026-04-26","cartao":"_lt1au0b3i","pessoa":"_oy295edg9","parcelas":1},{"id":"_nb5n5rzh7","desc":"CABELO","valor":45,"parcval":45,"data":"2026-04-25","cartao":"_lt1au0b3i","pessoa":"_oy295edg9","parcelas":1},{"id":"_nm4yqztbd","desc":"UBER","valor":18.67,"parcval":18.67,"data":"2026-04-25","cartao":"_lt1au0b3i","pessoa":"_oy295edg9","parcelas":1},{"id":"_8i0l6h0cv","desc":"CELULAR ANA","valor":5650,"parcval":706.25,"data":"2026-04-24","cartao":"_lt1au0b3i","pessoa":"_opdhe9pbh","parcelas":8},{"id":"_6fkft1thu","desc":"UBER","valor":7.95,"parcval":7.95,"data":"2026-04-23","cartao":"_lt1au0b3i","pessoa":"_oy295edg9","parcelas":1},{"id":"_r20343rb5","desc":"UBER","valor":21.95,"parcval":21.95,"data":"2026-04-19","cartao":"_lt1au0b3i","pessoa":"_oy295edg9","parcelas":1},{"id":"_crcv76o8y","desc":"GRAFICA CADU","valor":234,"parcval":117,"data":"2026-04-18","cartao":"_lt1au0b3i","pessoa":"_oy295edg9","parcelas":2},{"id":"_n4karw19t","desc":"ASLAN CADU","valor":979.2,"parcval":244.8,"data":"2026-04-18","cartao":"_lt1au0b3i","pessoa":"_oy295edg9","parcelas":4},{"id":"_4e4p3zdlh","desc":"UBER","valor":16.95,"parcval":16.95,"data":"2026-04-18","cartao":"_lt1au0b3i","pessoa":"_oy295edg9","parcelas":1},{"id":"_h6h5n7phs","desc":"ESFIRRA","valor":11,"parcval":11,"data":"2026-04-17","cartao":"_lt1au0b3i","pessoa":"_oy295edg9","parcelas":1},{"id":"_cz9ajbkgs","desc":"UBER","valor":10.39,"parcval":10.39,"data":"2026-04-13","cartao":"_lt1au0b3i","pessoa":"_oy295edg9","parcelas":1},{"id":"_g4dk9jyby","desc":"PARCELAMENTO","valor":4000,"parcval":800,"data":"2026-04-10","cartao":"_lt1au0b3i","pessoa":"_lbfte75cx","parcelas":5},{"id":"_wpl2z3m61","desc":"UBER","valor":9.88,"parcval":9.88,"data":"2026-04-09","cartao":"_lt1au0b3i","pessoa":"_oy295edg9","parcelas":1},{"id":"_01o5jpqbk","desc":"UBER","valor":26.31,"parcval":26.31,"data":"2026-04-08","cartao":"_lt1au0b3i","pessoa":"_oy295edg9","parcelas":1},{"id":"_xnbencnn6","desc":"JSK","valor":133,"parcval":133,"data":"2026-04-05","cartao":"_lt1au0b3i","pessoa":"_oy295edg9","parcelas":1},{"id":"_3q0wp5ibq","desc":"PARCELAMENTO SEU REINALDO","valor":5815,"parcval":1163,"data":"2026-03-08","cartao":"_lt1au0b3i","pessoa":"_0iatawy1z","parcelas":5},{"id":"_k5hxyjpbe","desc":"PARCELAMENTO","valor":4000,"parcval":800,"data":"2026-02-13","cartao":"_lt1au0b3i","pessoa":"_lbfte75cx","parcelas":5},{"id":"_n659fkj9y","desc":"ESCOLA MIGUEL","valor":1643.96,"parcval":410.99,"data":"2026-01-27","cartao":"_lt1au0b3i","pessoa":"_l36dhxxxr","parcelas":4},{"id":"_nn3qk52bn","desc":"SALMO","valor":408.24,"parcval":68.04,"data":"2026-01-27","cartao":"_lt1au0b3i","pessoa":"_l36dhxxxr","parcelas":6},{"id":"_ht23y06xc","desc":"PARCELAMENTO","valor":4000,"parcval":500,"data":"2025-10-12","cartao":"_lt1au0b3i","pessoa":"_lbfte75cx","parcelas":8},{"id":"_d3fclafsn","desc":"JUROS","valor":10000,"parcval":1000,"data":"2025-08-11","cartao":"_lt1au0b3i","pessoa":"_lbfte75cx","parcelas":10},{"id":"_3pkpsyky0","desc":"PARCELAMENTO","valor":6999.96,"parcval":583.33,"data":"2025-07-08","cartao":"_lt1au0b3i","pessoa":"_lbfte75cx","parcelas":12},{"id":"_lk8yzgt6l","desc":"INGRESSO","parcval":78.77,"valor":393.85,"parcelas":5,"data":"2026-01-21","cartao":"_v4dyofk84","pessoa":"_xnteenkbb"},{"id":"_o43rf6i4v","desc":"INGRESSO","valor":393.85,"parcval":78.77,"data":"2026-01-21","cartao":"_v4dyofk84","pessoa":"_opdhe9pbh","parcelas":5},{"id":"_hd1wxqu5d","desc":"CELULAR","valor":5421.12,"parcval":225.88,"data":"2025-11-30","cartao":"_v4dyofk84","pessoa":"_xnteenkbb","parcelas":24},{"id":"_l3oa37i66","desc":"PASSAGEM TIA TATA","valor":1995.05,"parcval":399.01,"data":"2026-04-18","cartao":"_ntashgjv3","pessoa":"_0iatawy1z","parcelas":5},{"id":"_m9euclkyx","desc":"BIOIMPEDANCIA","valor":203.64,"parcval":16.97,"data":"2026-04-16","cartao":"_ntashgjv3","pessoa":"_xnteenkbb","parcelas":12},{"id":"_j9gkcod92","desc":"AIRBNB","valor":787.74,"parcval":131.29,"data":"2026-04-16","cartao":"_ntashgjv3","pessoa":"_l36dhxxxr","parcelas":6},{"id":"_rvlb0vk0d","desc":"PASSAGEM","valor":1050.6,"parcval":210.12,"data":"2026-02-22","cartao":"_ntashgjv3","pessoa":"_opdhe9pbh","parcelas":5},{"id":"_r71i71uij","desc":"UBER OAB","valor":29.99,"parcval":29.99,"data":"2026-04-30","cartao":"_ntashgjv3","pessoa":"_xnteenkbb","parcelas":1},{"id":"_w0tc7v014","desc":"UBER OAB VOLTA","valor":29.98,"parcval":29.98,"data":"2026-04-30","cartao":"_ntashgjv3","pessoa":"_xnteenkbb","parcelas":1},{"id":"_g31namjl0","desc":"NOVA ERA","valor":124.32,"parcval":124.32,"data":"2026-04-26","cartao":"_ntashgjv3","pessoa":"_xnteenkbb","parcelas":1},{"id":"_70orn4di1","desc":"GASOLINA","valor":68.58,"parcval":68.58,"data":"2026-04-24","cartao":"_ntashgjv3","pessoa":"_xnteenkbb","parcelas":1},{"id":"_uir65tq1t","desc":"UBER","valor":40.98,"parcval":40.98,"data":"2026-04-18","cartao":"_ntashgjv3","pessoa":"_xnteenkbb","parcelas":1},{"id":"_x4dqpy31b","desc":"BAR DO CANTO","valor":159.76,"parcval":159.76,"data":"2026-04-18","cartao":"_ntashgjv3","pessoa":"_xnteenkbb","parcelas":1},{"id":"_rclwo1exe","desc":"PARCELAMENTO 2.5K","valor":2718.04,"parcval":679.51,"data":"2026-04-18","cartao":"_ntashgjv3","pessoa":"_awyk8oxrb","parcelas":4},{"id":"_9z3teia8a","desc":"UBER","valor":36.98,"parcval":36.98,"data":"2026-04-18","cartao":"_ntashgjv3","pessoa":"_xnteenkbb","parcelas":1},{"id":"_a8nomv9qz","desc":"CADARÇO","valor":24.5,"parcval":24.5,"data":"2026-04-18","cartao":"_ntashgjv3","pessoa":"_xnteenkbb","parcelas":1},{"id":"_rg3iokt7m","desc":"REVISÃO MOTO","valor":170,"parcval":170,"data":"2026-04-18","cartao":"_ntashgjv3","pessoa":"_xnteenkbb","parcelas":1},{"id":"_l6bmoz3s0","desc":"PARCELAMENTO","valor":1300,"parcval":650,"data":"2026-04-17","cartao":"_ntashgjv3","pessoa":"_xnteenkbb","parcelas":2},{"id":"_humpljv7i","desc":"PARCELAMENTO","valor":400,"parcval":400,"data":"2026-04-17","cartao":"_ntashgjv3","pessoa":"_xnteenkbb","parcelas":1},{"id":"_213gtr3q5","desc":"MOTO","valor":185,"parcval":185,"data":"2026-04-17","cartao":"_ntashgjv3","pessoa":"_xnteenkbb","parcelas":1},{"id":"_aw0ak2xta","desc":"MOTO","valor":200.5,"parcval":200.5,"data":"2026-04-17","cartao":"_ntashgjv3","pessoa":"_xnteenkbb","parcelas":1},{"id":"_jdhn76x6e","desc":"PERFUME","valor":103.35,"parcval":103.35,"data":"2026-04-17","cartao":"_ntashgjv3","pessoa":"_xnteenkbb","parcelas":1},{"id":"_5ut8bvwvd","desc":"HAVAN","valor":1660,"parcval":166,"data":"2025-10-30","cartao":"_ntashgjv3","pessoa":"_awyk8oxrb","parcelas":10},{"id":"_0frj2q4ff","desc":"CARTÕ DIGIO","parcval":4150,"valor":4150,"parcelas":1,"data":"2026-04-28","cartao":"_x0f5vx00z","pessoa":"_awyk8oxrb"},{"id":"_q2a7vh0j8","desc":"NETFLIX","valor":75,"parcval":75,"data":"2026-04-28","cartao":"_x0f5vx00z","pessoa":"_oy295edg9","parcelas":1},{"id":"_wwmhcqfq0","desc":"CINEMA","valor":30,"parcval":30,"data":"2026-05-06","cartao":"_lt1au0b3i","pessoa":"_oy295edg9","parcelas":1},{"id":"_ag67vsc7u","desc":"ESTACIONAMENTO","valor":14,"parcval":14,"data":"2026-05-06","cartao":"_lt1au0b3i","pessoa":"_oy295edg9","parcelas":1},{"id":"_7cnlkz59m","desc":"JSK","valor":92.9,"parcval":92.9,"data":"2026-05-06","cartao":"_lt1au0b3i","pessoa":"_oy295edg9","parcelas":1},{"id":"_ffho2w8nv","desc":"GASOLINA","valor":50,"parcval":50,"data":"2026-05-06","cartao":"_lt1au0b3i","pessoa":"_oy295edg9","parcelas":1},{"id":"_r7rc26oso","desc":"AMERICANAS","valor":30.98,"parcval":30.98,"data":"2026-05-06","cartao":"_lt1au0b3i","pessoa":"_oy295edg9","parcelas":1}],"assinaturas":[{"id":"_h4qvhp1oy","nome":"CONTA VIVO","valor":41,"cartao":"_lt1au0b3i","pessoa":"_oy295edg9","dia":13,"cor":"#6effa8"},{"id":"_ta7j05o7y","nome":"CONTA VIVO","valor":46,"cartao":"_lt1au0b3i","pessoa":"_xnteenkbb","dia":13,"cor":"#6effa8"},{"id":"_hc4yagdde","nome":"CONTA VIVO","valor":41,"cartao":"_lt1au0b3i","pessoa":"_awyk8oxrb","dia":13,"cor":"#6effa8"},{"id":"_fzesfpmex","nome":"YOUTUBE","valor":16.9,"cartao":"_ntashgjv3","pessoa":"_xnteenkbb","dia":21,"cor":"#4ade80"},{"id":"_tihlxnn9g","nome":"ACADEMIA","valor":104.9,"cartao":"_ntashgjv3","pessoa":"_xnteenkbb","dia":19,"cor":"#af1242"}]};
 var S=(function(){
   try{return JSON.parse(localStorage.getItem('fintrack2'))||JSON.parse(localStorage.getItem('fintrack'))||null;}
   catch(e){return null;}
-})()||{cartoes:[],pessoas:[],gastos:[],assinaturas:[]};
+})()||SEED_DATA;
 if(!S.assinaturas)S.assinaturas=[];
 var editId=null,tipoAtual='av';
 
@@ -706,16 +707,13 @@ document.getElementById('btn-drive-save').addEventListener('click', async functi
   msg.textContent = '⏳ Salvando no Drive...'; msg.style.color = 'var(--mt)';
   try {
     var content = JSON.stringify(S, null, 2);
-    // Busca arquivo existente
     var searchData = await driveRequest('Use gdrive to search for a file named "' + DRIVE_FILE_NAME + '" and return its file ID if found, or "NOT_FOUND" if not found. Return only the file ID or NOT_FOUND, nothing else.');
     var searchText = (searchData.content || []).map(function(b){return b.text||'';}).join('');
     var fileId = searchText.trim().replace(/[^a-zA-Z0-9_\-]/g,'');
 
     if(fileId && fileId !== 'NOTFOUND' && fileId.length > 10) {
-      // Atualiza arquivo existente
       await driveRequest('Use gdrive to update the file with ID "' + fileId + '" with this content: ' + content);
     } else {
-      // Cria novo arquivo
       await driveRequest('Use gdrive to create a new file named "' + DRIVE_FILE_NAME + '" with this JSON content: ' + content);
     }
     msg.innerHTML = '✅ <span style="color:var(--ac)">Salvo no Drive com sucesso!</span>';
@@ -731,7 +729,6 @@ document.getElementById('btn-drive-load').addEventListener('click', async functi
   try {
     var data = await driveRequest('Use gdrive to find the file named "' + DRIVE_FILE_NAME + '" and return its full content as raw JSON text only, no explanation.');
     var text = (data.content || []).map(function(b){return b.text||'';}).join('');
-    // extrai JSON do texto
     var match = text.match(/\{[\s\S]*\}/);
     if(!match) throw new Error('JSON not found');
     var loaded = JSON.parse(match[0]);
@@ -760,14 +757,12 @@ async function cloudSave() {
     };
     var resp, json;
     if(binId) {
-      // atualiza bin existente
       resp = await fetch('https://api.jsonbin.io/v3/b/' + binId, {
         method: 'PUT',
         headers: headers,
         body: data
       });
     } else {
-      // cria novo bin
       resp = await fetch('https://api.jsonbin.io/v3/b', {
         method: 'POST',
         headers: Object.assign({}, headers, {'X-Bin-Private': 'true'}),
@@ -800,20 +795,20 @@ async function cloudLoad() {
   } catch(e) { return false; }
 }
 
-// sobrescreve save para sempre sincronizar com JSONBin
 var _origSave = save;
 save = function() {
   _origSave();
   cloudSave();
 };
 
-// INIT — tenta carregar da nuvem
+// INIT — tenta carregar da nuvem, senão usa seed data já carregada
 (async function(){
   var fromCloud = await cloudLoad();
   if(fromCloud) {
     localStorage.setItem('fintrack2', JSON.stringify(S));
     toast('☁ Dados carregados da nuvem!');
   }
+  save();
   renderDash();
 })();
 </script>

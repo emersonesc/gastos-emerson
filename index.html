@@ -233,25 +233,6 @@ tr:hover td{background:var(--sf2)}
       <button class="btn-p" id="btn-add-p">Adicionar Pessoa</button>
     </div>
     <div id="list-p"></div>
-    <p class="stl" style="margin-top:1.5rem">Sincronização na Nuvem</p>
-    <div class="fc">
-      <p style="font-size:0.82rem;color:var(--mt);margin-bottom:1rem;line-height:1.6">Seus dados são sincronizados automaticamente na nuvem. Use o <span style="color:var(--ac)">ID de Sincronização</span> para acessar seus dados em qualquer navegador.</p>
-      <div class="fgr" style="margin-bottom:1rem">
-        <label>Meu ID de Sincronização</label>
-        <div style="display:flex;gap:0.5rem">
-          <input type="text" id="sync-id-input" placeholder="Carregando..." readonly style="opacity:0.8;cursor:default;flex:1">
-          <button class="btn-s" id="btn-copy-id" style="margin-top:0;white-space:nowrap">📋 Copiar</button>
-        </div>
-      </div>
-      <div style="border-top:1px solid var(--bd);padding-top:1rem;margin-top:0.25rem">
-        <p style="font-size:0.78rem;color:var(--mt);margin-bottom:0.75rem">Abrindo em um navegador novo? Cole seu ID aqui:</p>
-        <div style="display:flex;gap:0.5rem">
-          <input type="text" id="sync-id-new" placeholder="Cole seu ID aqui…" style="flex:1;background:var(--bg);border:1px solid var(--bd);border-radius:10px;padding:0.65rem 0.9rem;color:var(--tx);font-family:'DM Mono',monospace;font-size:0.88rem;outline:none">
-          <button class="btn-p" id="btn-sync-load" style="margin-top:0;white-space:nowrap">Conectar</button>
-        </div>
-      </div>
-      <div id="sync-msg" style="margin-top:0.75rem;font-size:0.78rem;color:var(--mt)"></div>
-    </div>
     <p class="stl" style="margin-top:1.5rem">Backup Local</p>
     <div class="fc">
       <p style="font-size:0.82rem;color:var(--mt);margin-bottom:1rem;line-height:1.6">Exportar/importar arquivo JSON localmente.</p>
@@ -638,45 +619,14 @@ document.getElementById('btn-add-sig').addEventListener('click',function(){
   save();renderSig();toast('✓ Assinatura adicionada!');document.getElementById('s-nome').value='';document.getElementById('s-val').value='';
 });
 
-// CONFIG
 function renderConfig(){
   function makeList(elId,arr,delFn){var el=document.getElementById(elId);el.innerHTML='';if(!arr.length){el.innerHTML='<div class="empty" style="padding:1rem">Nenhum cadastrado</div>';return;}var wrap=document.createElement('div');wrap.className='tw';var table=document.createElement('table');table.innerHTML='<thead><tr><th>Cor</th><th>Nome</th><th></th></tr></thead>';var tbody=document.createElement('tbody');arr.forEach(function(item){var tr=document.createElement('tr');tr.innerHTML='<td><span style="display:inline-block;width:14px;height:14px;border-radius:50%;background:'+item.cor+'"></span></td><td>'+item.nome+'</td><td></td>';var btn=document.createElement('button');btn.className='btn-d';btn.textContent='✕ Remover';btn.addEventListener('click',function(){delFn(item.id);});tr.querySelector('td:last-child').appendChild(btn);tbody.appendChild(tr);});table.appendChild(tbody);wrap.appendChild(table);el.appendChild(wrap);}
   makeList('list-c',S.cartoes,function(id){S.cartoes=S.cartoes.filter(function(x){return x.id!==id;});save();renderConfig();toast('Cartão removido.');});
   makeList('list-p',S.pessoas,function(id){S.pessoas=S.pessoas.filter(function(x){return x.id!==id;});save();renderConfig();toast('Pessoa removida.');});
-  var inp=document.getElementById('sync-id-input');
-  inp.value=binId||'(ainda não sincronizado — adicione um gasto)';
 }
-
-document.getElementById('btn-copy-id').addEventListener('click',function(){
-  var id=document.getElementById('sync-id-input').value;
-  if(!id||id.startsWith('('))return toast('⚠ Nenhum ID ainda!',true);
-  navigator.clipboard.writeText(id).then(function(){toast('✓ ID copiado!');}).catch(function(){toast('⚠ Copie manualmente: '+id,true);});
-});
-
-document.getElementById('btn-sync-load').addEventListener('click',async function(){
-  var id=document.getElementById('sync-id-new').value.trim();
-  var msg=document.getElementById('sync-msg');
-  if(!id)return toast('⚠ Cole seu ID primeiro!',true);
-  msg.textContent='⏳ Conectando...';msg.style.color='var(--mt)';
-  try{
-    var resp=await fetch('https://api.jsonbin.io/v3/b/'+id+'/latest',{headers:{'X-Master-Key':JSONBIN_KEY}});
-    var json=await resp.json();
-    var loaded=json.record;
-    if(!loaded||!loaded.gastos||!loaded.cartoes||!loaded.pessoas)throw new Error('inválido');
-    S=loaded;if(!S.assinaturas)S.assinaturas=[];
-    binId=id;localStorage.setItem(JSONBIN_BIN_ID_KEY,binId);
-    save();renderDash();renderConfig();
-    msg.innerHTML='✅ <span style="color:var(--ac)">Dados carregados com sucesso!</span>';
-    toast('✓ Sincronizado!');
-  }catch(e){
-    msg.innerHTML='❌ <span style="color:var(--ac2)">ID inválido ou erro de conexão.</span>';
-  }
-});
-
 document.getElementById('btn-add-c').addEventListener('click',function(){var nome=document.getElementById('c-nome').value.trim(),cor=document.getElementById('c-cor').value;if(!nome)return toast('⚠ Informe o nome',true);S.cartoes.push({id:uid(),nome:nome,cor:cor});save();renderConfig();toast('Cartão adicionado!');document.getElementById('c-nome').value='';});
 document.getElementById('btn-add-p').addEventListener('click',function(){var nome=document.getElementById('p-nome').value.trim(),cor=document.getElementById('p-cor').value;if(!nome)return toast('⚠ Informe o nome',true);S.pessoas.push({id:uid(),nome:nome,cor:cor});save();renderConfig();toast('Pessoa adicionada!');document.getElementById('p-nome').value='';});
 
-// BACKUP LOCAL
 document.getElementById('btn-export').addEventListener('click',function(){
   var a=document.createElement('a');a.href='data:application/json,'+encodeURIComponent(JSON.stringify(S,null,2));a.download='gastos-emerson.json';a.click();
 });
@@ -694,29 +644,20 @@ document.getElementById('btn-import').addEventListener('click',function(){
 // JSONBIN SYNC
 var JSONBIN_KEY = '$2a$10$qE3bnq.ha4E7KiW63MFanujRE6u8Ax73864nn/Ug25JwQ6j8GwZ.i';
 var JSONBIN_BIN_ID_KEY = 'gastos_emerson_bin_id';
-var binId = localStorage.getItem(JSONBIN_BIN_ID_KEY) || null;
+var FIXED_BIN_ID = '69fec2cac0954111d8f9e1e5';
+var binId = localStorage.getItem(JSONBIN_BIN_ID_KEY) || FIXED_BIN_ID;
+if(!localStorage.getItem(JSONBIN_BIN_ID_KEY)){localStorage.setItem(JSONBIN_BIN_ID_KEY, FIXED_BIN_ID);}
 
 async function cloudSave() {
   try {
     var data = JSON.stringify(S);
     var headers = {'Content-Type':'application/json','X-Master-Key':JSONBIN_KEY,'X-Bin-Name':'gastos-emerson'};
-    var resp, json;
-    if(binId) {
-      resp = await fetch('https://api.jsonbin.io/v3/b/'+binId, {method:'PUT',headers:headers,body:data});
-    } else {
-      resp = await fetch('https://api.jsonbin.io/v3/b', {method:'POST',headers:Object.assign({},headers,{'X-Bin-Private':'true'}),body:data});
-      json = await resp.json();
-      if(json.metadata && json.metadata.id) {
-        binId = json.metadata.id;
-        localStorage.setItem(JSONBIN_BIN_ID_KEY, binId);
-      }
-    }
+    await fetch('https://api.jsonbin.io/v3/b/'+binId, {method:'PUT',headers:headers,body:data});
     return true;
   } catch(e) { return false; }
 }
 
 async function cloudLoad() {
-  if(!binId) return false;
   try {
     var resp = await fetch('https://api.jsonbin.io/v3/b/'+binId+'/latest', {headers:{'X-Master-Key':JSONBIN_KEY}});
     var json = await resp.json();

@@ -375,7 +375,7 @@ function mesItems(ym){
     for(var i=0;i<g.parcelas;i++){
       var d=new Date(g.data+'T12:00:00');d.setMonth(d.getMonth()+1+i);
       var k=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0');
-      if(k===ym)items.push({_isSig:false,_nome:g.desc||'?',_val:pval(g),_data:g.data||'',_pessoaId:g.pessoa,_cartaoId:g.cartao,_parcelas:g.parcelas,_parcAtual:i+1,_rest:parcRest(g)});
+      if(k===ym)items.push({_isSig:false,_nome:g.desc||'?',_val:pval(g),_data:g.data||'',_pessoaId:g.pessoa,_cartaoId:g.cartao,_parcelas:g.parcelas,_parcAtual:i+1,_rest:parcRestAt(g,ym)});
     }
   });
   S.assinaturas.forEach(function(a){items.push(sigToItem(a));});

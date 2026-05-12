@@ -352,7 +352,7 @@ function parcRestAt(g,ym){
   var p=ym.split('-'),nm=parseInt(p[0])*12+(parseInt(p[1])-1),r=0;
   for(var i=0;i<g.parcelas;i++){
     var d=new Date(g.data+'T12:00:00');d.setMonth(d.getMonth()+1+i);
-    if(d.getFullYear()*12+d.getMonth()>=nm)r++;
+    if(d.getFullYear()*12+d.getMonth()>nm)r++;
   }
   return r;
 }
@@ -428,7 +428,7 @@ function _renderMDet(){
     var nm=document.createElement('div');nm.className='mi-nm';
     nm.textContent=item._nome;
     if(item._isSig){var st=document.createElement('span');st.className='ptag';st.style.cssText='background:rgba(74,222,128,0.12);color:var(--ac)';st.textContent='assinatura';nm.appendChild(st);}
-    else if(item._parcelas>1){var rt=document.createElement('span');rt.className='ptag';rt.style.cssText='background:'+(item._rest<=2?'rgba(248,113,113,0.2)':'rgba(74,222,128,0.15)')+';color:'+(item._rest<=2?'var(--ac2)':'var(--ac)');rt.textContent=item._rest+' rest.';nm.appendChild(rt);}
+    else if(item._parcelas>1&&item._rest>0){var rt=document.createElement('span');rt.className='ptag';rt.style.cssText='background:'+(item._rest<=2?'rgba(248,113,113,0.2)':'rgba(74,222,128,0.15)')+';color:'+(item._rest<=2?'var(--ac2)':'var(--ac)');rt.textContent=item._rest+' rest.';nm.appendChild(rt);}
     left.appendChild(nm);
     var sl=document.createElement('div');sl.className='mi-sb';
     sl.textContent=item._isSig?'Todo dia '+(item._dia||'?'):(item._parcelas>1?(item._parcAtual||1)+'/'+item._parcelas+' parcelas':'À vista');
@@ -629,7 +629,7 @@ function selectMes(ym){
     var info=document.createElement('div');info.className='gi-info';
     var nm=document.createElement('div');nm.className='gi-name';nm.textContent=it._nome;
     if(it._isSig){var st=document.createElement('span');st.className='ptag';st.style.cssText='background:rgba(74,222,128,0.12);color:var(--ac)';st.textContent='assinatura';nm.appendChild(st);}
-    else if(it._parcelas>1){var rt=document.createElement('span');rt.className='ptag';rt.style.cssText='background:'+(it._rest<=2?'rgba(248,113,113,0.2)':'rgba(74,222,128,0.15)')+';color:'+(it._rest<=2?'var(--ac2)':'var(--ac)');rt.textContent=it._rest+' rest.';nm.appendChild(rt);}
+    else if(it._parcelas>1&&it._rest>0){var rt=document.createElement('span');rt.className='ptag';rt.style.cssText='background:'+(it._rest<=2?'rgba(248,113,113,0.2)':'rgba(74,222,128,0.15)')+';color:'+(it._rest<=2?'var(--ac2)':'var(--ac)');rt.textContent=it._rest+' rest.';nm.appendChild(rt);}
     info.appendChild(nm);
     if(!it._isSig&&it._parcelas>1){var bar=document.createElement('div');bar.className='pbar';var fill=document.createElement('div');fill.className='pbar-f';fill.style.cssText='width:'+((it._parcelas-it._rest)/it._parcelas*100)+'%;background:'+(it._rest<=2?'var(--ac2)':'var(--ac)');bar.appendChild(fill);info.appendChild(bar);}
     var dataFmt=it._data?it._data.split('-').reverse().join('/'):'';
@@ -759,7 +759,7 @@ function selectMeusMes(m,pf,pessoa){
     var row=document.createElement('div');row.className='gi';
     var info=document.createElement('div');info.className='gi-info';
     var nm=document.createElement('div');nm.className='gi-name';nm.textContent=it._nome;
-    if(it._parcelas>1){var rt=document.createElement('span');rt.className='ptag';rt.style.cssText='background:'+(it._rest<=2?'rgba(248,113,113,0.2)':'rgba(74,222,128,0.15)')+';color:'+(it._rest<=2?'var(--ac2)':'var(--ac)');rt.textContent=it._rest+' rest.';nm.appendChild(rt);}
+    if(it._parcelas>1&&it._rest>0){var rt=document.createElement('span');rt.className='ptag';rt.style.cssText='background:'+(it._rest<=2?'rgba(248,113,113,0.2)':'rgba(74,222,128,0.15)')+';color:'+(it._rest<=2?'var(--ac2)':'var(--ac)');rt.textContent=it._rest+' rest.';nm.appendChild(rt);}
     info.appendChild(nm);
     if(it._parcelas>1){var bar=document.createElement('div');bar.className='pbar';var fill=document.createElement('div');fill.className='pbar-f';fill.style.cssText='width:'+((it._parcelas-it._rest)/it._parcelas*100)+'%;background:'+(it._rest<=2?'var(--ac2)':'var(--ac)');bar.appendChild(fill);info.appendChild(bar);}
     var sub=document.createElement('div');sub.className='gi-sub';

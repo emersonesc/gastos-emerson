@@ -348,6 +348,14 @@ function parcRest(g){
   }
   return r;
 }
+function parcRestAt(g,ym){
+  var p=ym.split('-'),nm=parseInt(p[0])*12+(parseInt(p[1])-1),r=0;
+  for(var i=0;i<g.parcelas;i++){
+    var d=new Date(g.data+'T12:00:00');d.setMonth(d.getMonth()+1+i);
+    if(d.getFullYear()*12+d.getMonth()>=nm)r++;
+  }
+  return r;
+}
 
 function toast(msg,err){
   var t=document.getElementById('toast');
@@ -355,8 +363,8 @@ function toast(msg,err){
   t.classList.add('show');setTimeout(function(){t.classList.remove('show');},2600);
 }
 
-function gastoToItem(g,parcAtual){
-  return {_isSig:false,_nome:g.desc||'?',_val:pval(g),_data:g.data||'',_pessoaId:g.pessoa,_cartaoId:g.cartao,_parcelas:g.parcelas,_parcAtual:parcAtual||1,_rest:parcRest(g)};
+function gastoToItem(g,parcAtual,contextYM){
+  return {_isSig:false,_id:g.id,_nome:g.desc||'?',_val:pval(g),_data:g.data||'',_pessoaId:g.pessoa,_cartaoId:g.cartao,_parcelas:g.parcelas,_parcAtual:parcAtual||1,_rest:contextYM?parcRestAt(g,contextYM):parcRest(g)};
 }
 function sigToItem(a){
   return {_isSig:true,_nome:a.nome||'?',_val:a.valor,_data:'',_pessoaId:a.pessoa,_cartaoId:a.cartao,_parcelas:1,_parcAtual:1,_dia:a.dia,_rest:0};
@@ -640,7 +648,7 @@ function renderMeus(){
   var con=document.getElementById('meus-wrap');con.innerHTML='';
   var meusG=S.gastos.filter(function(g){return g.pessoa===pid;});
   var pf={};
-  meusG.forEach(function(g){var v=pval(g);for(var i=0;i<g.parcelas;i++){var d=new Date(g.data+'T12:00:00');d.setMonth(d.getMonth()+1+i);var k=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0');if(!pf[k])pf[k]={total:0,items:[]};pf[k].total+=v;pf[k].items.push(gastoToItem(g,i+1));}});
+  meusG.forEach(function(g){var v=pval(g);for(var i=0;i<g.parcelas;i++){var d=new Date(g.data+'T12:00:00');d.setMonth(d.getMonth()+1+i);var k=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0');if(!pf[k])pf[k]={total:0,items:[]};pf[k].total+=v;pf[k].items.push(gastoToItem(g,i+1,k));}});
   var meses=Object.keys(pf).sort(),ym=nowYM();
   // Stats cards
   var totGeral=meusG.reduce(function(s,g){return s+g.valor;},0);

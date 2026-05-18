@@ -147,9 +147,7 @@ tr:hover td{background:var(--sf2)}
       <div class="dt"><div class="dt-hd">Por Cartão</div><div id="body-c"></div></div>
       <div class="dt"><div class="dt-hd">Por Pessoa</div><div id="body-p"></div></div>
     </div>
-    <p class="stl">Evolução Mensal</p>
-    <div class="fc" style="padding:1.25rem;margin-bottom:1.5rem"><canvas id="chart-meses" height="90"></canvas></div>
-    <p class="stl">Por Pessoa</p>
+<p class="stl">Por Pessoa</p>
     <div class="fc" style="padding:1.25rem;margin-bottom:1.5rem;max-width:500px"><canvas id="chart-pessoas"></canvas></div>
     <p class="stl" id="det-title">Detalhes do Mês</p>
     <div id="det-content"></div>
@@ -573,17 +571,7 @@ function renderDash(){
 
 function renderCharts(pf){
   var isDark=document.documentElement.getAttribute('data-theme')==='dark';
-  var gridC=isDark?'#1e4a28':'#bbf7d0',tickC=isDark?'#6b9a79':'#4b7a5e',txC=isDark?'#f0fdf4':'#052e16';
-  var allMs=Object.keys(pf).sort();
-  if(_charts.meses)_charts.meses.destroy();
-  _charts.meses=new Chart(document.getElementById('chart-meses'),{
-    type:'bar',
-    data:{labels:allMs.map(mlab),datasets:[{data:allMs.map(function(m){return pf[m]||0;}),backgroundColor:'rgba(74,222,128,0.28)',borderColor:'rgba(74,222,128,0.75)',borderWidth:1,borderRadius:4}]},
-    options:{responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return' '+fmt(c.raw);}}}},scales:{
-      y:{ticks:{callback:function(v){return'R$'+(v>=1000?(v/1000).toFixed(0)+'k':v.toFixed(0));},color:tickC,font:{family:'DM Mono',size:10}},grid:{color:gridC},border:{display:false}},
-      x:{ticks:{color:tickC,font:{family:'DM Mono',size:10}},grid:{display:false},border:{display:false}}
-    }}
-  });
+  var txC=isDark?'#f0fdf4':'#052e16';
   var pFilt=S.pessoas.filter(function(p){return S.gastos.some(function(g){return g.pessoa===p.id;});});
   var pVals=pFilt.map(function(p){return S.gastos.filter(function(g){return g.pessoa===p.id;}).reduce(function(s,g){return s+g.valor;},0);});
   if(_charts.pessoas)_charts.pessoas.destroy();

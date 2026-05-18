@@ -238,6 +238,16 @@ tr:hover td{background:var(--sf2)}
       <button class="btn-p" id="btn-add-p">Adicionar Pessoa</button>
     </div>
     <div id="list-p"></div>
+    <p class="stl" style="margin-top:1.5rem">Sincronização na Nuvem</p>
+    <div class="fc">
+      <p style="font-size:0.82rem;color:var(--mt);margin-bottom:1rem;line-height:1.6">Insira sua chave da API do <a href="https://jsonbin.io" target="_blank" style="color:var(--ac)">JSONBin.io</a> para habilitar o sync na nuvem. A chave fica salva apenas no seu navegador.</p>
+      <div class="fg">
+        <div class="fgr s2"><label>API Key (X-Master-Key)</label><input type="password" id="cfg-jkey" placeholder="$2a$10$…" autocomplete="off"></div>
+        <div class="fgr s2"><label>Bin ID</label><input type="text" id="cfg-bid" placeholder="ex: 6abcd1234…" autocomplete="off"></div>
+      </div>
+      <button class="btn-p" id="btn-save-cloud-cfg" style="margin-top:0.5rem">Salvar configuração</button>
+      <div id="cloud-cfg-msg" style="margin-top:0.6rem;font-size:0.78rem;color:var(--mt)"></div>
+    </div>
     <p class="stl" style="margin-top:1.5rem">Backup Local</p>
     <div class="fc">
       <p style="font-size:0.82rem;color:var(--mt);margin-bottom:1rem;line-height:1.6">Exportar/importar arquivo JSON localmente.</p>
@@ -812,6 +822,8 @@ function renderConfig(){
   function makeList(elId,arr,delFn){var el=document.getElementById(elId);el.innerHTML='';if(!arr.length){el.innerHTML='<div class="empty" style="padding:1rem">Nenhum cadastrado</div>';return;}var wrap=document.createElement('div');wrap.className='tw';var table=document.createElement('table');table.innerHTML='<thead><tr><th>Cor</th><th>Nome</th><th></th></tr></thead>';var tbody=document.createElement('tbody');arr.forEach(function(item){var tr=document.createElement('tr');tr.innerHTML='<td><span style="display:inline-block;width:14px;height:14px;border-radius:50%;background:'+item.cor+'"></span></td><td>'+item.nome+'</td><td></td>';var btn=document.createElement('button');btn.className='btn-d';btn.textContent='✕ Remover';btn.addEventListener('click',function(){delFn(item.id);});tr.querySelector('td:last-child').appendChild(btn);tbody.appendChild(tr);});table.appendChild(tbody);wrap.appendChild(table);el.appendChild(wrap);}
   makeList('list-c',S.cartoes,function(id){S.cartoes=S.cartoes.filter(function(x){return x.id!==id;});save();renderConfig();toast('Cartão removido.');});
   makeList('list-p',S.pessoas,function(id){S.pessoas=S.pessoas.filter(function(x){return x.id!==id;});save();renderConfig();toast('Pessoa removida.');});
+  var jkEl=document.getElementById('cfg-jkey');var bidEl=document.getElementById('cfg-bid');
+  if(jkEl)jkEl.value=getCloudKey();if(bidEl)bidEl.value=getCloudBinId();
 }
 document.getElementById('btn-add-c').addEventListener('click',function(){var nome=document.getElementById('c-nome').value.trim(),cor=document.getElementById('c-cor').value;if(!nome)return toast('⚠ Informe o nome',true);S.cartoes.push({id:uid(),nome:nome,cor:cor});save();renderConfig();toast('Cartão adicionado!');document.getElementById('c-nome').value='';});
 document.getElementById('btn-add-p').addEventListener('click',function(){var nome=document.getElementById('p-nome').value.trim(),cor=document.getElementById('p-cor').value;if(!nome)return toast('⚠ Informe o nome',true);S.pessoas.push({id:uid(),nome:nome,cor:cor});save();renderConfig();toast('Pessoa adicionada!');document.getElementById('p-nome').value='';});
@@ -831,24 +843,37 @@ document.getElementById('btn-import').addEventListener('click',function(){
 });
 
 // JSONBIN SYNC
-var JSONBIN_KEY = '$2a$10$qE3bnq.ha4E7KiW63MFanujRE6u8Ax73864nn/Ug25JwQ6j8GwZ.i';
+var JSONBIN_KEY_STORAGE = 'gastos_emerson_api_key';
 var JSONBIN_BIN_ID_KEY = 'gastos_emerson_bin_id';
-var FIXED_BIN_ID = '69fec2cac0954111d8f9e1e5';
-var binId = localStorage.getItem(JSONBIN_BIN_ID_KEY) || FIXED_BIN_ID;
-if(!localStorage.getItem(JSONBIN_BIN_ID_KEY)){localStorage.setItem(JSONBIN_BIN_ID_KEY, FIXED_BIN_ID);}
+function getCloudKey(){return localStorage.getItem(JSONBIN_KEY_STORAGE)||'';}
+function getCloudBinId(){return localStorage.getItem(JSONBIN_BIN_ID_KEY)||'';}
+
+document.getElementById('btn-save-cloud-cfg').addEventListener('click',function(){
+  var key=(document.getElementById('cfg-jkey').value||'').trim();
+  var bid=(document.getElementById('cfg-bid').value||'').trim();
+  if(key)localStorage.setItem(JSONBIN_KEY_STORAGE,key);else localStorage.removeItem(JSONBIN_KEY_STORAGE);
+  if(bid)localStorage.setItem(JSONBIN_BIN_ID_KEY,bid);else localStorage.removeItem(JSONBIN_BIN_ID_KEY);
+  var msg=document.getElementById('cloud-cfg-msg');
+  msg.textContent=(key&&bid)?'✓ Configuração salva. O sync está ativo.':'⚠ Sem chave/ID configurados. Sync desativado.';
+  msg.style.color=(key&&bid)?'var(--ac)':'var(--ac2)';
+});
 
 async function cloudSave() {
+  var key=getCloudKey(),bid=getCloudBinId();
+  if(!key||!bid)return false;
   try {
     var data = JSON.stringify(S);
-    var headers = {'Content-Type':'application/json','X-Master-Key':JSONBIN_KEY,'X-Bin-Name':'gastos-emerson'};
-    await fetch('https://api.jsonbin.io/v3/b/'+binId, {method:'PUT',headers:headers,body:data});
+    var headers = {'Content-Type':'application/json','X-Master-Key':key,'X-Bin-Name':'gastos-emerson'};
+    await fetch('https://api.jsonbin.io/v3/b/'+bid, {method:'PUT',headers:headers,body:data});
     return true;
   } catch(e) { return false; }
 }
 
 async function cloudLoad() {
+  var key=getCloudKey(),bid=getCloudBinId();
+  if(!key||!bid)return false;
   try {
-    var resp = await fetch('https://api.jsonbin.io/v3/b/'+binId+'/latest', {headers:{'X-Master-Key':JSONBIN_KEY}});
+    var resp = await fetch('https://api.jsonbin.io/v3/b/'+bid+'/latest', {headers:{'X-Master-Key':key}});
     var json = await resp.json();
     var loaded = json.record;
     if(loaded && loaded.gastos && loaded.cartoes && loaded.pessoas) {

@@ -116,7 +116,6 @@ tr:hover td{background:var(--sf2)}
 @media(min-width:500px){.toast{left:auto;max-width:320px}}
 .toast.show{transform:translateY(0);opacity:1}
 </style>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#060e09">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -147,9 +146,7 @@ tr:hover td{background:var(--sf2)}
       <div class="dt"><div class="dt-hd">Por Cartão</div><div id="body-c"></div></div>
       <div class="dt"><div class="dt-hd">Por Pessoa</div><div id="body-p"></div></div>
     </div>
-<p class="stl">Por Pessoa</p>
-    <div class="fc" style="padding:1.25rem;margin-bottom:1.5rem;max-width:500px"><canvas id="chart-pessoas"></canvas></div>
-    <p class="stl" id="det-title">Detalhes do Mês</p>
+<p class="stl" id="det-title">Detalhes do Mês</p>
     <div id="det-content"></div>
   </div>
 
@@ -299,7 +296,6 @@ var S=(function(){
 })()||SEED_DATA;
 if(!S.assinaturas)S.assinaturas=[];
 var editId=null,tipoAtual='av';
-var _charts={};
 var _sH={col:'data',asc:false},_sM={col:'data',asc:false};
 function _sort(list,col,asc){
   return list.slice().sort(function(a,b){
@@ -566,20 +562,6 @@ function renderDash(){
   if(!S.pessoas.length){bpEl.innerHTML='<div style="padding:1rem;font-size:0.82rem;color:var(--mt)">Nenhuma pessoa</div>';}
   else{S.pessoas.forEach(function(p){var row=document.createElement('div');row.className='dt-row';row.innerHTML='<div class="dt-l"><span class="dt-dot" style="background:'+p.cor+'"></span>'+p.nome+'</div><div class="dt-vl" style="color:'+p.cor+'">'+fmt(pTots[p.id])+'</div>';var mi=pItems[p.id];row.addEventListener('click',function(){openModal(p.nome,p.cor,mi);});bpEl.appendChild(row);});}
   if(meses.length)selectMes(meses[0]);
-  if(typeof Chart!=='undefined')renderCharts(pf);
-}
-
-function renderCharts(pf){
-  var isDark=document.documentElement.getAttribute('data-theme')==='dark';
-  var txC=isDark?'#f0fdf4':'#052e16';
-  var pFilt=S.pessoas.filter(function(p){return S.gastos.some(function(g){return g.pessoa===p.id;});});
-  var pVals=pFilt.map(function(p){return S.gastos.filter(function(g){return g.pessoa===p.id;}).reduce(function(s,g){return s+g.valor;},0);});
-  if(_charts.pessoas)_charts.pessoas.destroy();
-  _charts.pessoas=new Chart(document.getElementById('chart-pessoas'),{
-    type:'doughnut',
-    data:{labels:pFilt.map(function(p){return p.nome;}),datasets:[{data:pVals,backgroundColor:pFilt.map(function(p){return p.cor+'55';}),borderColor:pFilt.map(function(p){return p.cor;}),borderWidth:2}]},
-    options:{responsive:true,cutout:'65%',plugins:{legend:{position:'right',labels:{color:txC,font:{family:'DM Mono',size:11},padding:10,boxWidth:12}},tooltip:{callbacks:{label:function(c){return' '+fmt(c.raw);}}}}}
-  });
 }
 
 function selectMes(ym){

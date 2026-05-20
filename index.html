@@ -323,7 +323,7 @@ function _thSort(th,col,state,render){
   });
 }
 
-function save(){try{localStorage.setItem('fintrack2',JSON.stringify(S));}catch(e){}}
+function save(){try{S._savedAt=Date.now();localStorage.setItem('fintrack2',JSON.stringify(S));}catch(e){}}
 function uid(){return '_'+Math.random().toString(36).substr(2,9);}
 function fmt(v){return 'R$ '+parseFloat(v||0).toFixed(2).replace('.',',').replace(/\B(?=(\d{3})+(?!\d))/g,'.');}
 function mlab(ym){if(!ym)return'';var p=ym.split('-');return ML[+p[1]-1]+'/'+p[0].slice(2);}
@@ -852,6 +852,9 @@ async function cloudLoad() {
     var json = await resp.json();
     var loaded = json.record;
     if(loaded && loaded.gastos && loaded.cartoes && loaded.pessoas) {
+      var localTs = S._savedAt || 0;
+      var cloudTs = loaded._savedAt || 0;
+      if(cloudTs <= localTs) return false;
       S = loaded;
       if(!S.assinaturas) S.assinaturas = [];
       return true;

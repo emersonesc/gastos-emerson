@@ -632,15 +632,13 @@ function renderMeus(){
     '<div class="sc c3"><div class="sc-lb">Parcelas Restantes</div><div class="sc-vl">'+fmt(parcResto)+'</div></div>'+
     '<div class="sc c4"><div class="sc-lb">Assinaturas/Mês</div><div class="sc-vl">'+fmt(sigTot)+'</div></div>';
   con.appendChild(stats);
-  // Month chips (todos os meses, igual ao dashboard)
+  // Month chips (apenas mês atual e futuros)
   if(meses.length){
     var mTitle=document.createElement('p');mTitle.className='stl';mTitle.textContent='Por Mês (fatura)';con.appendChild(mTitle);
     var mEl=document.createElement('div');mEl.className='months';mEl.id='meus-months';con.appendChild(mEl);
-    meses.forEach(function(m){
+    meses.filter(function(m){return m>=ym;}).forEach(function(m){
       var ch=document.createElement('div');ch.className='mchip';ch.dataset.ym=m;
-      var isFut=m>=ym;
-      if(!isFut)ch.style.opacity='0.7';
-      ch.innerHTML='<div class="ml">'+mlab(m)+'</div><div class="mv" style="color:'+(isFut?'var(--ac)':'var(--tx)')+'">'+fmt(pf[m].total)+'</div>';
+      ch.innerHTML='<div class="ml">'+mlab(m)+'</div><div class="mv" style="color:var(--ac)">'+fmt(pf[m].total)+'</div>';
       ch.addEventListener('click',(function(mm){return function(){selectMeusMes(mm,pf,pessoa);};})(m));
       mEl.appendChild(ch);
     });

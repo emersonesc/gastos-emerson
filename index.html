@@ -527,6 +527,7 @@ document.getElementById('btn-salvar').addEventListener('click',function(){
 
 function renderDash(){
   var ym=nowYM(),pf={};
+  var sigTot=S.assinaturas.reduce(function(s,a){return s+a.valor;},0);
   S.gastos.forEach(function(g){
     var v=pval(g);
     for(var i=0;i<g.parcelas;i++){
@@ -535,9 +536,11 @@ function renderDash(){
       pf[k]=(pf[k]||0)+v;
     }
   });
+  // Adiciona assinaturas ao total de cada mês
+  Object.keys(pf).forEach(function(k){pf[k]+=sigTot;});
+  if(!pf[ym])pf[ym]=sigTot;
   var fatAtual=pf[ym]||0;
   var totGeral=S.gastos.reduce(function(s,g){return s+g.valor;},0);
-  var sigTot=S.assinaturas.reduce(function(s,a){return s+a.valor;},0);
   var lancMes=S.gastos.filter(function(g){return g.data.slice(0,7)===ym;}).length;
   document.getElementById('stat-cards').innerHTML=
     '<div class="sc c1"><div class="sc-lb">Total Geral</div><div class="sc-vl">'+fmt(totGeral)+'</div></div>'+
@@ -618,13 +621,16 @@ function renderMeus(){
   var con=document.getElementById('meus-wrap');con.innerHTML='';
   var meusG=S.gastos.filter(function(g){return g.pessoa===pid;});
   var pf={};
+  var sigTot=S.assinaturas.filter(function(a){return a.pessoa===pid;}).reduce(function(s,a){return s+a.valor;},0);
   meusG.forEach(function(g){var v=pval(g);for(var i=0;i<g.parcelas;i++){var d=new Date(g.data+'T12:00:00');d.setMonth(d.getMonth()+1+i);var k=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0');if(!pf[k])pf[k]={total:0,items:[]};pf[k].total+=v;pf[k].items.push(gastoToItem(g,i+1,k));}});
+  // Adiciona assinaturas ao total de cada mês
+  Object.keys(pf).forEach(function(k){pf[k].total+=sigTot;});
   var meses=Object.keys(pf).sort(),ym=nowYM();
+  if(!pf[ym])pf[ym]={total:sigTot,items:[]};
   // Stats cards
   var totGeral=meusG.reduce(function(s,g){return s+g.valor;},0);
   var fatAtual=(pf[ym]||{total:0}).total;
   var parcResto=meusG.filter(function(g){return g.parcelas>1&&parcRest(g)>0;}).reduce(function(s,g){return s+pval(g)*parcRest(g);},0);
-  var sigTot=S.assinaturas.filter(function(a){return a.pessoa===pid;}).reduce(function(s,a){return s+a.valor;},0);
   var stats=document.createElement('div');stats.className='cards';stats.style.marginBottom='1.5rem';
   stats.innerHTML=
     '<div class="sc c1"><div class="sc-lb">Total Gasto</div><div class="sc-vl">'+fmt(totGeral)+'</div></div>'+
